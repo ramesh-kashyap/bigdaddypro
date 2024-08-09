@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html  lang="<%= locale %>" data-dpr="1" style="font-size: 48.16px;">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="robots" content="noindex,nofollow">
+	<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+	<title><%= siteName %></title>
+	<link href="/css/home/chunk-vendors.css" rel="stylesheet" />
+	<link href="/css/home/app.css" rel="stylesheet" />
+	<link href="/css/home/chunk.css" rel="stylesheet" />
+	<link href="/css/home/chunk2.css" rel="stylesheet" />
+	<link rel="shortcut icon" href="/images/bitbug_favicon.png" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="/dynamic-styles.css">
+
+
+
+
+	<style>
+		html,
+		body {
+			height: 100%;
+			width: 100%;
+			background-color: #9195a3;
+			padding: 0;
+			margin: 0;
+		}
+		 #notice {
+        -moz-animation: marquee 10s linear infinite;
+        -webkit-animation: marquee 10s linear infinite;
+        animation: marquee 10s linear infinite;
+      }
+      @-moz-keyframes marquee {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+      @-webkit-keyframes marquee {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+      @keyframes marquee {
+        0% {
+          -moz-transform: translateX(100%);
+          -webkit-transform: translateX(100%);
+          transform: translateX(100%)
+        }
+        100% {
+          -moz-transform: translateX(-100%);
+          -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+        }
+      }
+	</style>
+</head>
+
+<body style="font-size: 12px;" class="">
+	<div id="app">
+		<div data-v-432e6ed0="" class="home mian game">
+			<div data-v-106b99c8="" data-v-432e6ed0="" class="navbar">
+				<div data-v-106b99c8="" class="navbar-left"></div>
+				<div data-v-106b99c8="" class="navbar-title">
+					<!---->
+					<div data-v-432e6ed0="" data-v-106b99c8="" class="c-row c-row-middle-center">
+						<img data-v-432e6ed0="" data-v-106b99c8=""
+							src="<%= Logo %>" class="logo" >
+					</div>
+				</div>
+				<div data-v-106b99c8="" class="navbar-right" >
+					<div data-v-432e6ed0="" data-v-106b99c8="" class="c-row c-row-middle-center">
+				<!--		 <a data-v-432e6ed0="" data-v-106b99c8="" href="" class="c-row c-row-middle-center">
+							<img data-v-432e6ed0="" data-v-106b99c8="" height="25px" width="25px" src="/images/down.png"
+								class="down">
+						</a> -->
+						<img data-v-432e6ed0="" data-v-106b99c8="" height="25px" width="25px" src="/images/down2.png"
+							class="down">
+					</div>
+				</div>
+			</div>
+			<div data-v-432e6ed0="" class="banner">
+				<div data-v-432e6ed0="" class="van-swipe">
+					<div class="van-swipe__track list-banner"
+						style="width: 1448px; transition-duration: 0ms; transform: translateX(0px);">
+						<div data-v-432e6ed0="" class="van-swipe-item" style="width: 482px;">
+							<img data-v-432e6ed0="" src="<%=home_banner1%>" class="img">
+						</div>
+						<div data-v-432e6ed0="" class="van-swipe-item" style="width: 482px;">
+							<img data-v-432e6ed0="" src="<%=home_banner2%>" class="img">
+						</div>
+						<div data-v-432e6ed0="" class="van-swipe-item" style="width: 482px;">
+							<img data-v-432e6ed0="" src="<%=home_banner3%>" class="img">
+						</div>
+						<div data-v-432e6ed0="" class="van-swipe-item" style="width: 482px;">
+							<img data-v-432e6ed0="" src="<%=home_banner4%>" class="img">
+						</div>
+					</div>
+					<div class="van-swipe__indicators">
+						<i class="van-swipe__indicator" style=""></i>
+						<i class="van-swipe__indicator" style=""></i>
+						<i class="van-swipe__indicator" style=""></i>
+						<i class="van-swipe__indicator"></i>
+					</div>
+				</div>
+			</div>
+			<div data-v-432e6ed0="" class="notice" style="
+			border-radius: 10px;
+			margin: 10px;
+		">				
+				<div data-v-432e6ed0="" class="notice-box c-row c-row-between">
+					<div data-v-432e6ed0="" role="alert" class="van-notice-bar" style="font-size: 15px; background-color: #3a3a3a;">
+						<i class="van-icon van-icon-volume-o van-notice-bar__left-icon">
+							<!---->
+						</i>
+						<div role="marquee" class="van-notice-bar__wrap">
+							<div><p id="notice"><%= __("Welcome to PlayFlix Website") %>.</p>
+							</div>
+						</div>
+					</div>
+					<div data-v-432e6ed0="" class="txt">
+						<span data-v-432e6ed0="" class="sp">
+							<img data-v-432e6ed0="" src="/images/notice-right.svg" class="img"><%= __("Latest Notification") %>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div data-v-432e6ed0="" class="home-com">
+				<div data-v-432e6ed0="" class="van-tabs van-tabs--line home-tab action">
+					<div class="van-tabs__wrap van-hairline--top-bottom">
+						<div role="tablist" class="van-tabs__nav van-tabs__nav--line">
+							<div role="tab" aria-selected="true" class="van-tab van-tab--active">
+								<span class="van-tab__text van-tab__text--ellipsis">
+									<div data-v-432e6ed0="">
+										<img data-v-432e6ed0="" src="/images/CP.png" class="img">
+									</div>
+								</span>
+							</div>
+							<div role="tab" class="van-tab testing-list-game">
+								<span class="van-tab__text van-tab__text--ellipsis">
+									<div data-v-432e6ed0="">
+										<img data-v-432e6ed0="" src="/images/DZ.webp" class="img">
+									</div>
+								</span>
+							</div>
+							<div role="tab" class="van-tab testing-list-game">
+								<span class="van-tab__text van-tab__text--ellipsis">
+									<div data-v-432e6ed0="">
+										<img data-v-432e6ed0="" src="/images/DC.webp" class="img">
+									</div>
+								</span>
+							</div>
+							<div role="tab" class="van-tab testing-list-game">
+								<span class="van-tab__text van-tab__text--ellipsis">
+									<div data-v-432e6ed0="">
+										<img data-v-432e6ed0="" src="/images/TY.webp" class="img">
+									</div>
+								</span>
+							</div>
+							<div class="van-tabs__line"
+								style="width: 56.5px; transform: translateX(56.5px) translateX(-50%);"></div>
+						</div>
+					</div>
+					<div class="van-tabs__content">
+						<div data-v-432e6ed0="" role="tabpanel" class="c-row-between van-tab__pane" style="">
+							<div data-v-432e6ed0="" class="gameList m-t-20">
+								<div data-v-432e6ed0="" class="item m-b-20 list-games" onclick="location.href='/win'">
+									<div data-v-432e6ed0="" class="info i3">
+										<div data-v-432e6ed0="" class="name"> <%= __("WIN GO")%> </div>
+										<div data-v-432e6ed0="" class="des"> <%= __('Guess green/purple/red to win the game')%></div>
+										<img data-v-432e6ed0="" width="120px" height="85px"
+											src="/images/logo-wingo.webp" class="img m-r-5">
+									</div>
+									<div data-v-432e6ed0="" class="userList">
+										<div data-v-39efd474="" data-v-432e6ed0="" class="gomeList">
+											<div data-v-39efd474="" class="list">
+												<div data-v-39efd474="" class="swpier van-swipe">
+													<div class="van-swipe__track van-swipe__track--vertical"
+														style="height: 200px; transition-duration: 500ms; transform: translateY(0px);"
+														id="wingo">
+														<!---->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!---->
+								<div data-v-432e6ed0="" class="item m-b-20 list-games" onclick="location.href='/5d'">
+									<div data-v-432e6ed0="" class="info i2">
+										<div data-v-432e6ed0="" class="name"> <%= __('5D Lotre')%> </div>
+										<div data-v-432e6ed0="" class="des"> <%= __('Guess the number/big/small/odd/even')%> </div>
+										<img data-v-432e6ed0="" width="120px" height="85px"
+											src="/images/logo-lottery.webp" class="img m-r-5">
+									</div>
+									<div data-v-432e6ed0="" class="userList">
+										<div data-v-39efd474="" data-v-432e6ed0="" class="gomeList">
+											<div data-v-39efd474="" class="list">
+												<div data-v-39efd474="" class="swpier van-swipe">
+													<div class="van-swipe__track van-swipe__track--vertical"
+														style="height: 255px; transition-duration: 500ms; transform: translateY(0px);" 
+														id="k5d">
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div data-v-432e6ed0="" class="item m-b-20 list-games" onclick="location.href='/k3'">
+									<div data-v-432e6ed0="" class="info i4">
+										<div data-v-432e6ed0="" class="name"><%= __('K3 Lotre')%> </div>
+										<div data-v-432e6ed0="" class="des">  <%= __('Guess the number/big/small/odd/even')%> </div>
+										<img data-v-432e6ed0="" width="120px" height="85px" src="/images/logo-k333.webp"
+											class="img m-r-5">
+									</div>
+									<div data-v-432e6ed0="" class="userList">
+										<div data-v-39efd474="" data-v-432e6ed0="" class="gomeList">
+											<div data-v-39efd474="" class="list">
+												<div data-v-39efd474="" class="swpier van-swipe">
+													<div class="van-swipe__track van-swipe__track--vertical"
+														style="height: 255px; transition-duration: 500ms; transform: translateY(0px);" 
+														id="k3">
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!---->
+							</div>
+						</div>
+						<div data-v-432e6ed0="" role="tabpanel" class="c-row-between van-tab__pane"
+							style="display: none;">
+							<!---->
+						</div>
+						<div data-v-432e6ed0="" role="tabpanel" class="c-row-between van-tab__pane"
+							style="display: none;">
+							<!---->
+						</div>
+						<div data-v-432e6ed0="" role="tabpanel" class="c-row-between van-tab__pane"
+							style="display: none;">
+							<!---->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!---->
+			<div data-v-432e6ed0="" class="bonus-box">
+				<div data-v-432e6ed0="" class="img van-image" style="width: 100%; height: 230px;top: -4%;">
+					<img src="/images/coin-bonus.webp" class="van-image__img">
+				</div>
+				<div data-v-432e6ed0="" class="bonus-bg" style="">
+					<div data-v-432e6ed0="" class="inner">
+						<!----><span data-v-432e6ed0=""> <%= currency %>&nbsp;6788716</span>
+					</div>
+				</div>
+			</div>
+			<div data-v-432e6ed0="" class="running-time">
+				<p data-v-432e6ed0="" class="running-title c-tc"> <%= siteName %> <%=__('Running')%></p>
+				<!-- <h1 data-v-432e6ed0="" class="running-title c-tc" style="margin-top: -20px;"> Live</h1> -->
+				<div data-v-432e6ed0="" class="c-row c-row-between list-flip_nums" style="padding: 0px 33px 30px;">
+					<div data-v-432e6ed0="" class="flip-num">
+						<div data-v-432e6ed0="" class="top">00</div>
+						<div data-v-432e6ed0="" class="bottom">Days</div>
+						<div data-v-432e6ed0="" class="bottom-card">
+							<div data-v-432e6ed0="" class="back">
+								<p data-v-432e6ed0="">00</p>
+							</div>
+							<div data-v-432e6ed0="" class="front c-tc"> Days </div>
+						</div>
+					</div>
+					<div data-v-432e6ed0="" class="flip-num">
+						<div data-v-432e6ed0="" class="top">00</div>
+						<div data-v-432e6ed0="" class="bottom">Hours</div>
+						<div data-v-432e6ed0="" class="bottom-card">
+							<div data-v-432e6ed0="" class="back">
+								<p data-v-432e6ed0="" class="c-tc">00</p>
+							</div>
+							<div data-v-432e6ed0="" class="front c-tc"> Hours </div>
+						</div>
+					</div>
+					<div data-v-432e6ed0="" class="flip-num">
+						<div data-v-432e6ed0="" class="top">00</div>
+						<div data-v-432e6ed0="" class="bottom c-tc"> Minutes </div>
+						<div data-v-432e6ed0="" class="bottom-card">
+							<div data-v-432e6ed0="" class="back">
+								<p data-v-432e6ed0="" class="c-tc">00</p>
+							</div>
+							<div data-v-432e6ed0="" class="front c-tc"> Minutes</div>
+						</div>
+					</div>
+					<div data-v-432e6ed0="" class="flip-num">
+						<div data-v-432e6ed0="" class="top">00</div>
+						<div data-v-432e6ed0="" class="bottom c-tc"> Seconds</div>
+						<div data-v-432e6ed0="" class="bottom-card">
+							<div data-v-432e6ed0="" class="back c-tc">
+								<p data-v-432e6ed0="" class="c-tc">00</p>
+							</div>
+							<div data-v-432e6ed0="" class="front c-tc">Seconds</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div data-v-432e6ed0="" class="web-info c-row c-row-between">
+				<div data-v-432e6ed0="" class="item c-tc">
+					<div data-v-432e6ed0="" class="c-row c-row-cetner">
+						<div data-v-432e6ed0="" class="img van-image" style="width: 40px; height: 40px;">
+							<img src="/images/u_home.png" class="van-image__img">
+						</div>
+					</div>
+					<div data-v-432e6ed0="" class="num" id="player"></div>
+					<div data-v-432e6ed0="" class="txt"> <%= __('Players') %> </div>
+				</div>
+				<div data-v-432e6ed0="" class="item c-tc">
+					<div data-v-432e6ed0="" class="c-row c-row-cetner">
+						<div data-v-432e6ed0="" class="img van-image" style="width: 40px; height: 40px;">
+							<img src="/images/q_home.png" class="van-image__img">
+						</div>
+					</div>
+					<div data-v-432e6ed0="" class="num" id="betting"></div>
+					<div data-v-432e6ed0="" class="txt"><%= __('Total Of Betting') %> </div>
+				</div>
+				<div data-v-432e6ed0="" class="item c-tc">
+					<div data-v-432e6ed0="" class="c-row c-row-cetner">
+						<div data-v-432e6ed0="" class="img van-image" style="width: 40px; height: 40px;">
+							<img src="/images/us_home.png" class="van-image__img">
+						</div>
+					</div>
+					<div data-v-432e6ed0="" class="num" id="online"></div>
+					<div data-v-432e6ed0="" class="txt"> <%= __('Online') %> </div>
+				</div>
+			</div>
+			<div data-v-432e6ed0="" class="rank-box">
+				<div data-v-432e6ed0="" class="rank-tit"> <%= __('Withdrawal Chart') %></div>
+				<div data-v-e52eeae0="" data-v-432e6ed0="" class="RankList">
+					<div data-v-e52eeae0="" class="van-swipe" style="height: 100%;">
+						<div class="van-swipe__track van-swipe__track--vertical" 
+						style="height: 462px; transition-duration: 500ms; transform: translateY(-358px);" 
+						id="top-recharge">
+							<!---->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div data-v-432e6ed0="" class="home-how">
+				<div data-v-432e6ed0="" class="info">
+					<div data-v-432e6ed0="" class="tit"> <%= __('How to bet') %> ? </div>
+					<div data-v-432e6ed0="" class="tab c-row c-flex-warp c-row-between" id="tab_support">
+						<div data-v-432e6ed0="" class="item c-row c-row-between action c-row-middle">
+							<div data-v-432e6ed0="">
+								<div data-v-432e6ed0="" class="step"> <%= __('First Step') %></div>
+								<div data-v-432e6ed0="" color="#e45d61" class="name"> <%=__('Choose a game') %> </div>
+							</div>
+							<div data-v-432e6ed0="">
+								<div data-v-432e6ed0="" class="van-image" style="width: 35px; height: 35px;"><img
+										src="/images/work_first_hong.webp" class="van-image__img"></div>
+							</div>
+						</div>
+						<div data-v-432e6ed0="" class="item c-row c-row-between c-row-middle">
+							<div data-v-432e6ed0="">
+								<div data-v-432e6ed0="" class="step"> <%=__('Second Step') %></div>
+								<div data-v-432e6ed0="" color="#000" class="name"> <%=__('Choose your lucky number') %></div>
+							</div>
+							<div data-v-432e6ed0="">
+								<div data-v-432e6ed0="" class="van-image" style="width: 35px; height: 35px;"><img
+										src="/images/0d.png" class="van-image__img"></div>
+							</div>
+						</div>
+						<div data-v-432e6ed0="" class="item c-row c-row-between c-row-middle">
+							<div data-v-432e6ed0="">
+								<div data-v-432e6ed0="" class="step"> <%=__('Third Step') %> </div>
+								<div data-v-432e6ed0="" color="#000" class="name"> <%=__('Betting') %></div>
+							</div>
+							<div data-v-432e6ed0="">
+								<div data-v-432e6ed0="" class="van-image" style="width: 35px; height: 35px;"><img
+										src="/images/bet.png" class="van-image__img"></div>
+							</div>
+						</div>
+						<div data-v-432e6ed0="" class="item c-row c-row-between c-row-middle">
+							<div data-v-432e6ed0="">
+								<div data-v-432e6ed0="" class="step"> <%=__('Fourth Step') %> </div>
+								<div data-v-432e6ed0="" color="#000" class="name"> <%=__('Get Bonus') %> </div>
+							</div>
+							<div data-v-432e6ed0="">
+								<div data-v-432e6ed0="" class="van-image" style="width: 35px; height: 35px;"><img
+										src="/images/scsc.png" class="van-image__img"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div data-v-432e6ed0="" class="how-list m-t-20">
+					<div data-v-432e6ed0="" class="swipe van-swipe" id="swipe_van-swipe">
+						<div class="van-swipe__track" id="show-support"
+							style="width: 1272px; transition-duration: 0ms; transform: translateX(0px);">
+							<div data-v-432e6ed0="" class="van-swipe-item" style="">
+								<div data-v-432e6ed0="" class="c-tc m-b-15 van-ellipsis"><%=__('Choose a game you love') %>
+								</div>
+								<div data-v-432e6ed0="" class="van-multi-ellipsis--l2"><%=__('You can choose to play lottery games every 1 minute, 3 minutes, 5 minutes, and 10 minutes') %></div>
+							</div>
+							<div data-v-432e6ed0="" class="van-swipe-item" style="">
+								<div data-v-432e6ed0="" class="c-tc m-b-15 van-ellipsis"><%=__('Choose your lucky number') %>
+								</div>
+								<div data-v-432e6ed0="" class="van-multi-ellipsis--l2"><%=__('Choose your lucky number or color') %></div>
+							</div>
+							<div data-v-432e6ed0="" class="van-swipe-item" style="">
+								<div data-v-432e6ed0="" class="c-tc m-b-15 van-ellipsis"><%=__('Place A bet') %></div>
+								<div data-v-432e6ed0="" class="van-multi-ellipsis--l2"><%=__('Choose the amount of money you want to bet and confirm') %></div>
+							</div>
+							<div data-v-432e6ed0="" class="van-swipe-item" style="">
+								<div data-v-432e6ed0="" class="c-tc m-b-15 van-ellipsis"><%=__('Win The Prize') %></div>
+								<div data-v-432e6ed0="" class="van-multi-ellipsis--l2"><%=__('When you choose a lucky number for the current round, the system will automatically add the prize money to your balance') %></div>
+							</div>
+						</div>
+					</div>
+					<div data-v-432e6ed0="" class="arrow">
+						<div data-v-432e6ed0="" class="item left">
+							<div data-v-432e6ed0="" class="arr c-row c-row-middle-center action"><i data-v-432e6ed0=""
+									class="van-icon van-icon-arrow-left"
+									style="color: rgb(255, 255, 255); font-size: 35px;">
+									<!---->
+								</i></div>
+						</div>
+						<div data-v-432e6ed0="" class="item right">
+							<div data-v-432e6ed0="" class="arr c-row c-row-middle-center action"><i data-v-432e6ed0=""
+									class="van-icon van-icon-arrow" style="color: rgb(255, 255, 255); font-size: 35px;">
+									<!---->
+								</i></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!---->
+			<div data-v-432e6ed0="" id="moveBox" class="moveBox" style="display: none;">
+				<div data-v-432e6ed0="" class="moveHead c-row c-row-between c-row-middle">
+					<div data-v-432e6ed0="" class="close"> Close </div>
+					<div data-v-432e6ed0=""><span data-v-432e6ed0="">Full Screen</span></div>
+				</div>
+				<div data-v-432e6ed0="" class="long">
+					<div data-v-432e6ed0="" class="van-tabs van-tabs--line">
+						<div class="van-tabs__wrap van-hairline--top-bottom">
+							<div role="tablist" class="van-tabs__nav van-tabs__nav--line">
+								<div role="tab" aria-selected="true" class="van-tab van-tab--active"><span
+										class="van-tab__text van-tab__text--ellipsis">Bệt rồng mới nhất</span></div>
+								<div role="tab" class="van-tab"><span class="van-tab__text van-tab__text--ellipsis">My Bets</span></div>
+								<div class="van-tabs__line"></div>
+							</div>
+						</div>
+						<div class="van-tabs__content">
+							<div data-v-432e6ed0="" role="tabpanel" class="van-tab__pane" style="">
+								<div data-v-432e6ed0="" class="longlist"></div>
+							</div>
+							<div data-v-432e6ed0="" role="tabpanel" class="van-tab__pane" style="display: none;">
+								<!---->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!---->
+			<div data-v-7692a079="" data-v-432e6ed0="" class="Loading c-row c-row-middle-center">
+				<div data-v-7692a079="" class="van-loading van-loading--circular">
+					<span data-v-7692a079="" class="van-loading__spinner van-loading__spinner--circular"
+						style="color: rgb(242, 65, 59);">
+						<svg data-v-7692a079="" viewBox="25 25 50 50" class="van-loading__circular">
+							<circle data-v-7692a079="" cx="50" cy="50" r="20" fill="none"></circle>
+						</svg>
+					</span>
+				</div>
+			</div>
+			<%- include('../nav') -%>
+		</div>
+	</div>
+	<div class="van-overlay" style="z-index: 2001; display: none;" id="modalUser"></div>
+	<div role="dialog" class="van-dialog" style="z-index: 2002; display: none;" aria-labelledby="Lời nhắc" id="modalUser">
+		<div class="van-dialog__header">Reminder</div>
+		<div class="van-dialog__content">
+			<div class="van-dialog__message van-dialog__message--has-title">
+				<font face="Arial">Reminder : It reminds customers to copy the exact random amount shown by the system when making the deposit and paste it into the payment description to ensure the automatic credit of points or funds. Additionally, it advises against reserving the transfer with the bank and warns that the company will not be responsible for any loss resulting from incorrect transfers !</font><br>
+			</div>
+		</div>
+		<div class="van-hairline--top van-dialog__footer">
+			<button class="van-button van-button--default van-button--large van-dialog__confirm">
+				<div class="van-button__content"><span class="van-button__text">Confirm</span></div>
+			</button>
+		</div>
+	</div>
+
+	<style>
+		.van-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--van-overlay-z-index);
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .7);
+}
+	</style>
+	<div class="van-overlay" style="z-index: 2003; --f13b4d11-currentFontFamily: 'Roboto', 'Inter', sans-serif; display: none;"><!----></div>
+
+	<div role="dialog" tabindex="0" class="van-popup van-popup--center van-dialog firstSaveDialog" style="z-index: 2003; --f13b4d11-currentFontFamily: 'Roboto', 'Inter', sans-serif; display: none;"><div class="van-dialog__header"><div data-v-9cd12fb2="" class="header"><div data-v-9cd12fb2="" class="title">Extra first deposit bonus</div><div data-v-9cd12fb2="" class="tip">Each account can only receive rewards once</div></div></div><div class="van-dialog__content"><div data-v-9cd12fb2="" class="container"><div data-v-48dabef8="" class="first_list-item"><div data-v-48dabef8="" class="head"><div data-v-48dabef8="" class="title">First deposit<span data-v-48dabef8="">100000</span></div><div data-v-48dabef8="" class="orange">+ ₹1000.00</div></div><div data-v-48dabef8="" class="description">Deposit 100000 for the first time and you will receive 1000 bonus</div><div data-v-48dabef8="" class="foot"><div data-v-bff59ba2="" data-v-48dabef8="" class="progress" style="background: var(--bg_color_L1); height: 16px; border-radius: 16px;"><div data-v-bff59ba2="" class="line" style="background: var(--norm_secondary-color); width: 0%; height: 16px; border-radius: 16px;"></div><div data-v-bff59ba2="" class="step">0/100000</div></div><div data-v-48dabef8="" class="btn n2" onclick="location.href='/wallet/recharge'">Deposit</div></div></div><div data-v-48dabef8="" class="first_list-item"><div data-v-48dabef8="" class="head"><div data-v-48dabef8="" class="title">First deposit<span data-v-48dabef8="">50000</span></div><div data-v-48dabef8="" class="orange">+ ₹500.00</div></div><div data-v-48dabef8="" class="description">Deposit 50000 for the first time and you will receive 500 bonus</div><div data-v-48dabef8="" class="foot"><div data-v-bff59ba2="" data-v-48dabef8="" class="progress" style="background: var(--bg_color_L1); height: 16px; border-radius: 16px;"><div data-v-bff59ba2="" class="line" style="background: var(--norm_secondary-color); width: 0%; height: 16px; border-radius: 16px;"></div><div data-v-bff59ba2="" class="step">0/50000</div></div><div data-v-48dabef8="" class="btn n2" onclick="location.href='/wallet/recharge'">Deposit</div></div></div><div data-v-48dabef8="" class="first_list-item"><div data-v-48dabef8="" class="head"><div data-v-48dabef8="" class="title">First deposit<span data-v-48dabef8="">10000</span></div><div data-v-48dabef8="" class="orange">+ ₹400.00</div></div><div data-v-48dabef8="" class="description">Deposit 10000 for the first time and you will receive 400 bonus</div><div data-v-48dabef8="" class="foot"><div data-v-bff59ba2="" data-v-48dabef8="" class="progress" style="background: var(--bg_color_L1); height: 16px; border-radius: 16px;"><div data-v-bff59ba2="" class="line" style="background: var(--norm_secondary-color); width: 0%; height: 16px; border-radius: 16px;"></div><div data-v-bff59ba2="" class="step">0/10000</div></div><div data-v-48dabef8="" class="btn n2" onclick="location.href='/wallet/recharge'">Deposit</div></div></div><div data-v-48dabef8="" class="first_list-item"><div data-v-48dabef8="" class="head"><div data-v-48dabef8="" class="title">First deposit<span data-v-48dabef8="">5000</span></div><div data-v-48dabef8="" class="orange">+ ₹200.00</div></div><div data-v-48dabef8="" class="description">Deposit 5000 for the first time and you will receive 200 bonus</div><div data-v-48dabef8="" class="foot"><div data-v-bff59ba2="" data-v-48dabef8="" class="progress" style="background: var(--bg_color_L1); height: 16px; border-radius: 16px;"><div data-v-bff59ba2="" class="line" style="background: var(--norm_secondary-color); width: 0%; height: 16px; border-radius: 16px;"></div><div data-v-bff59ba2="" class="step">0/5000</div></div><div data-v-48dabef8="" class="btn n2" onclick="location.href='/wallet/recharge'">Deposit</div></div></div><div data-v-48dabef8="" class="first_list-item"><div data-v-48dabef8="" class="head"><div data-v-48dabef8="" class="title">First deposit<span data-v-48dabef8="">1000</span></div><div data-v-48dabef8="" class="orange">+ ₹100.00</div></div><div data-v-48dabef8="" class="description">Deposit 1000 for the first time and you will receive 100 bonus</div><div data-v-48dabef8="" class="foot"><div data-v-bff59ba2="" data-v-48dabef8="" class="progress" style="background: var(--bg_color_L1); height: 16px; border-radius: 16px;"><div data-v-bff59ba2="" class="line" style="background: var(--norm_secondary-color); width: 0%; height: 16px; border-radius: 16px;"></div><div data-v-bff59ba2="" class="step">0/1000</div></div><div data-v-48dabef8="" class="btn n2" onclick="location.href='/wallet/recharge'">Deposit</div></div></div><div data-v-48dabef8="" class="first_list-item"><div data-v-48dabef8="" class="head"><div data-v-48dabef8="" class="title">First deposit<span data-v-48dabef8="">500</span></div><div data-v-48dabef8="" class="orange">+ ₹50.00</div></div><div data-v-48dabef8="" class="description">Deposit 500 for the first time and you will receive 50 bonus</div><div data-v-48dabef8="" class="foot"><div data-v-bff59ba2="" data-v-48dabef8="" class="progress" style="background: var(--bg_color_L1); height: 16px; border-radius: 16px;"><div data-v-bff59ba2="" class="line" style="background: var(--norm_secondary-color); width: 0%; height: 16px; border-radius: 16px;"></div><div data-v-bff59ba2="" class="step">0/500</div></div><div data-v-48dabef8="" class="btn n2" onclick="location.href='/wallet/recharge'">Deposit</div></div></div><div data-v-48dabef8="" class="first_list-item"><div data-v-48dabef8="" class="head"><div data-v-48dabef8="" class="title">First deposit<span data-v-48dabef8="">200</span></div><div data-v-48dabef8="" class="orange">+ 40.00</div></div><div data-v-48dabef8="" class="description">Deposit 200 for the first time and you will receive 40 bonus</div><div data-v-48dabef8="" class="foot"><div data-v-bff59ba2="" data-v-48dabef8="" class="progress" style="background: var(--bg_color_L1); height: 16px; border-radius: 16px;"><div data-v-bff59ba2="" class="line" style="background: var(--norm_secondary-color); width: 0%; height: 16px; border-radius: 16px;"></div><div data-v-bff59ba2="" class="step">0/200</div></div><div data-v-48dabef8="" class="btn n2" onclick="location.href='/wallet/recharge'">Deposit</div></div></div><div data-v-48dabef8="" class="first_list-item"><div data-v-48dabef8="" class="head"><div data-v-48dabef8="" class="title">First deposit<span data-v-48dabef8="">100</span></div><div data-v-48dabef8="" class="orange">+ ₹28.00</div></div><div data-v-48dabef8="" class="description">Deposit 100 for the first time and you will receive 28 bonus</div><div data-v-48dabef8="" class="foot"><div data-v-bff59ba2="" data-v-48dabef8="" class="progress" style="background: var(--bg_color_L1); height: 16px; border-radius: 16px;"><div data-v-bff59ba2="" class="line" style="background: var(--norm_secondary-color); width: 0%; height: 16px; border-radius: 16px;"></div><div data-v-bff59ba2="" class="step">0/100</div></div><div data-v-48dabef8="" class="btn n2" onclick="location.href='/wallet/recharge'">Deposit</div></div></div><!----><!----></div><div data-v-9cd12fb2="" class="close"></div></div><div data-v-9cd12fb2="" class="footer"><div data-v-9cd12fb2="" class="active"><svg data-v-9cd12fb2="" class="svg-icon icon-active"><use xlink:href="#icon-active"></use></svg>No more reminders today</div><div data-v-9cd12fb2="" class="btn" onclick="location.href='/wallet/recharge'">Activity</div></div><!----></div>
+	<style>
+		.customer {
+		position: fixed;
+		bottom: 2.4rem;
+		right: .4rem;
+		width: 1.49333rem;
+		height: 1.49333rem;
+		border-radius: 50%;
+		z-index: 100;
+	}
+	.customer img {
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+	}
+	#app div:not(.ranking), #app input {
+    box-shadow: none !important;
+}
+@media (min-width: 501px) {
+    .van-popup.van-popup--center {
+        max-width: 10rem;
+    }
+}
+.firstSaveDialog {
+    width: 8rem;
+    overflow: initial;
+}
+.van-dialog {
+    top: 45%;
+    width: var(--van-dialog-width);
+    overflow: hidden;
+    font-size: var(--van-dialog-font-size);
+    background: var(--van-dialog-background);
+    border-radius: var(--van-dialog-radius);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: var(--van-dialog-transition);
+    transition: var(--van-dialog-transition);
+    -webkit-transition-property: opacity, -webkit-transform;
+    transition-property: opacity, -webkit-transform;
+    transition-property: transform, opacity;
+    transition-property: transform, opacity, -webkit-transform;
+}
+.van-popup--center {
+    top: 50%;
+    left: 0;
+    right: 0;
+    width: -webkit-fit-content;
+    width: fit-content;
+    max-width: calc(100vw - var(--van-padding-md)* 2);
+    margin: 0 auto;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.van-popup {
+    position: fixed;
+    max-height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: #FFF;
+    -webkit-transition: #FFF;
+    transition:#FFF;
+    -webkit-overflow-scrolling: touch;
+	background: transparent !important;
+}
+.firstSaveDialog .van-dialog__header {
+    padding-top: 0;
+}
+
+.van-dialog__header {
+    color:#1E2637;
+    padding-top: var(--van-dialog-header-padding-top);
+    font-weight:600;
+    line-height: 24px;
+    text-align: center;
+}
+.header[data-v-9cd12fb2] {
+    min-height: 1.86667rem;
+    background-color: #ddb564;
+    color: #1E2637
+	;
+    padding-top: .33333rem;
+    border-radius: .26667rem .26667rem 0 0;
+}
+
+.header .title[data-v-9cd12fb2] {
+    font-size: .37333rem;
+}
+.header .tip[data-v-9cd12fb2] {
+    font-size: .29333rem;
+    font-weight: 400;
+    margin-top: .26667rem;
+}
+.container[data-v-9cd12fb2] {
+    padding: .26667rem .13333rem;
+    background-color: #3d3d3d;
+    max-height: calc(100vh - 8.4rem);
+    overflow: auto;
+}
+.container[data-v-9cd12fb2] .first_list-item {
+    box-shadow: none;
+}
+
+[data-v-9cd12fb2] .first_list-item {
+    background: #F6F6F6;
+}
+.first_list-item[data-v-48dabef8] {
+    padding: .26667rem;
+    border-radius: .26667rem;
+    background:#3d3d3d;
+}
+.first_list-item .head[data-v-48dabef8] {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    margin-bottom: .18667rem;
+}
+.first_list-item .head .title[data-v-48dabef8] {
+    font-size: .37333rem;
+    color: #ffffff;
+}
+.first_list-item .head .orange[data-v-48dabef8] {
+    font-size: .34667rem;
+    color: rgb(221 181 100);
+}
+.first_list-item .head .title>span[data-v-48dabef8] {
+    color:rgb(221 181 100);
+	margin-left: 4px;
+}
+.first_list-item .description[data-v-48dabef8] {
+    font-size: .29333rem;
+    color:#ffffff;
+    margin-bottom: .26667rem;
+}
+.first_list-item .foot[data-v-48dabef8] {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.first_list-item .foot>div[data-v-48dabef8] {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+.progress[data-v-bff59ba2] {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.first_list-item .foot .btn.n2[data-v-48dabef8] {
+    border: .01333rem solid rgb(221 181 100);
+    color: rgb(221 181 100);
+}
+
+.first_list-item .foot .btn[data-v-48dabef8] {
+    width: 2.13333rem;
+    min-height: .66667rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+    flex: none;
+    font-size: .32rem;
+    margin-left: .56rem;
+    border-radius: .13333rem;
+    padding: 0 .13333rem;
+    color: #FFF;
+}
+.first_list-item .foot>div[data-v-48dabef8] {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+.close[data-v-9cd12fb2] {
+    position: absolute;
+    width: .8rem;
+    height: .8rem;
+    border-radius: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translate(-50%);
+    bottom: -.93333rem;
+    background-image: url(/images/close-862c6a4d1.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.footer[data-v-9cd12fb2] {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    min-height: 1.33333rem;
+    background-color: #3d3d3d;
+    padding: 0 .26667rem;
+    border-radius: 0 0 .26667rem .26667rem;
+}
+.footer .active[data-v-9cd12fb2] {
+    padding-left: .6rem;
+    color: #ffffff;
+    font-size: .32rem;
+    background-repeat: no-repeat;
+    background-size: .48rem;
+    background-position: left;
+    background-image: url(/images/active-0d7a3379.svg);
+}
+.svg-icon {
+    width: 1em;
+    height: 1em;
+    fill: var(--svgHoticon);
+    vertical-align: middle;
+}
+.footer .btn[data-v-9cd12fb2] {
+    background: rgb(221 181 100);
+    width: 2.66667rem;
+    min-height: .66667rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    border-radius: .33333rem;
+    text-align: center;
+    color: #FFF;
+    font-size: .37333rem;
+    font-weight: 700;
+}
+	</style>
+		<div class="customer"   onclick="location.href='https://t.me/playflix_official'" id="customerId"  style="--f13b4d11-currentFontFamily: 'Roboto', 'Inter', sans-serif; --f6a705e1-currentFontFamily: bahnschrift;"><img class=""  src="/images/customer-service-support.png"></div>
+
+		
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="/js/client.js"></script>
+	
+	<script>
+        fetch('/api/webapi/GetUserInfo')
+            .then(response => response.json())
+            .then(data => {
+
+				console.log(data.data.total_money);
+				
+                if (data.status === true && data.data.total_money<=0) {
+					$('.firstSaveDialog').css("display","block");
+					$('.van-overlay').css("display","block");
+                };
+               
+            });
+           
+    </script>
+	
+	<script>
+
+
+		$(document).ready(function(){
+			$(".close").click(function(){
+				$('.firstSaveDialog').css("display","none");
+				$('.van-overlay').css("display","none");
+			});
+
+			
+
+		});
+		</script>
+
+	<script>
+		$(document).ready(function () {
+			function alertMess(text, sic) {
+				$('body').append(
+					`
+					<div data-v-1dcba851="" class="msg">
+						<div data-v-1dcba851="" class="msg-content v-enter-active v-enter-to" style=""> ${text} </div>
+					</div>
+					`
+				);
+				setTimeout(() => {
+					$('.msg .msg-content').removeClass('v-enter-active v-enter-to');
+					$('.msg .msg-content').addClass('v-leave-active v-leave-to');
+					setTimeout(() => {
+						$('.msg').remove();
+					}, 100);
+					sic.removeClass('block-click');
+				}, 1000);
+			}
+			// $('.gameList .list-games:eq(2), .testing-list-game').click(function (e) {
+			// 	e.preventDefault();
+			// 	$(this).addClass('block-click');
+			// 	alertMess('Currently under development', $(this));
+			// });
+			let getWBody = $('.navbar').width();
+			let getswipe = $('#swipe_van-swipe').width();
+			$(".list-banner .van-swipe-item").css("width", `${getWBody}px`);
+			$("#swipe_van-swipe .van-swipe__track .van-swipe-item").css("width", `${getswipe}px`);
+
+			let formSlide = document.querySelector('.van-notice-bar__content');
+			if (formSlide) {
+				formSlide.style = 'transition-duration: 44.0815s; transform: translateX(-2204.07px);';
+			}
+
+			$('#tab_support .item').click(function (e) {
+				e.preventDefault();
+				$('#tab_support .item').removeClass('action');
+				let elementThis = $(this).addClass('action');
+			});
+			$('#tab_support .item:eq(0)').click(function (e) {
+				e.preventDefault();
+				$('#show-support .van-swipe-item .van-ellipsis').text('Choose a game');
+				$('#show-support .van-swipe-item .van-multi-ellipsis--l2').text('You can choose to play lottery games every 1 minute, 3 minutes, 5 minutes, and 10 minutes.');
+			});
+
+			$('#tab_support .item:eq(1)').click(function (e) {
+				e.preventDefault();
+				let action = $(this).children().children().children();
+				action.attr('src', '/images/support2.png');
+				$('#show-support .van-swipe-item .van-ellipsis').text('Choose number');
+				$('#show-support .van-swipe-item .van-multi-ellipsis--l2').text('Choose your lucky number or color');
+			});
+
+			$('#tab_support .item:eq(2)').click(function (e) {
+				e.preventDefault();
+				let action = $(this).children().children().children();
+				action.attr('src', '/images/support3.png');
+				$('#show-support .van-swipe-item .van-ellipsis').text('Place a bet');
+				$('#show-support .van-swipe-item .van-multi-ellipsis--l2').text('Choose the amount of money you want to bet and confirm');
+			});
+
+			$('#tab_support .item:eq(3)').click(function (e) {
+				e.preventDefault();
+				let action = $(this).children().children().children();
+				action.attr('src', '/images/support4.png');
+				$('#show-support .van-swipe-item .van-ellipsis').text('Win the Prize');
+				$('#show-support .van-swipe-item .van-multi-ellipsis--l2').text('When you choose a lucky number for the current round, the system will automatically add the prize money to your balance');
+			});
+
+			let count = 0;
+			let element = document.querySelector('.van-swipe__track');
+			setInterval(() => {
+				let getWBody = $('.navbar').width();
+				$(`.van-swipe__indicator`).removeClass('van-swipe__indicator--active');
+				$(`.van-swipe__indicator`).css("backgroundColor", "");
+				$(`.van-swipe__indicator:eq(${count})`).addClass('van-swipe__indicator--active');
+				$(`.van-swipe__indicator:eq(${count})`).css("backgroundColor", "rgb(242, 65, 59)");
+				if (element) {
+					if (count == 0) {
+						element.style = `width: 1448px; transition-duration: 500ms; transform: translateX(-${getWBody}px);`;
+					} else if (count == 1) {
+						element.style = `width: 1448px; transition-duration: 500ms; transform: translateX(-${getWBody * 2}px);`;
+					} else if (count == 2) {
+						element.style = `width: 1448px; transition-duration: 500ms; transform: translateX(-${getWBody * 3}px);`;
+					} else if (count == 3) {
+						count = -1;
+						element.style = `width: 1448px; transition-duration: 0ms; transform: translateX(0px);`;
+					}
+				}
+				count++;
+			}, 2500);
+
+			function cownDownTimer() {
+				let countDownDate = new Date("2024-05-01T23:59:59.9999999+01:00").getTime();
+				setInterval(function () {
+					let now = new Date().getTime();
+					let distance = now - countDownDate;
+					let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+					let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+					let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+					$('.list-flip_nums .flip-num:eq(0) .top').text((days < 10) ? `0${days}` : days);
+					$('.list-flip_nums .flip-num:eq(0) .bottom-card').removeClass('flipX');
+					$('.list-flip_nums .flip-num:eq(0) .back .c-tc').text((days + 1 < 10) ? `0${days + 1}` : days + 1);
+					if (seconds >= 59 && minutes >= 59 && hours >= 23) {
+						setTimeout(() => {
+							$('.list-flip_nums .flip-num:eq(0) .bottom-card').addClass('flipX');
+						}, 100);
+					}
+
+					$('.list-flip_nums .flip-num:eq(1) .top').text((hours < 10) ? `0${hours}` : hours);
+					$('.list-flip_nums .flip-num:eq(1) .bottom-card').removeClass('flipX');
+					$('.list-flip_nums .flip-num:eq(1) .back .c-tc').text((hours + 1 < 10) ? `0${hours + 1}` : hours + 1);
+					if (seconds >= 59 && minutes >= 59) {
+						setTimeout(() => {
+							$('.list-flip_nums .flip-num:eq(1) .bottom-card').addClass('flipX');
+						}, 100);
+					}
+
+					$('.list-flip_nums .flip-num:eq(2) .top').text((minutes < 10) ? `0${minutes}` : minutes);
+					$('.list-flip_nums .flip-num:eq(2) .bottom-card').removeClass('flipX');
+					$('.list-flip_nums .flip-num:eq(2) .back .c-tc').text((minutes + 1 < 10) ? `0${minutes + 1}` : minutes + 1);
+					if (seconds >= 59) {
+						setTimeout(() => {
+							$('.list-flip_nums .flip-num:eq(2) .bottom-card').addClass('flipX');
+						}, 100);
+					}
+
+					$('.list-flip_nums .flip-num:eq(3) .bottom-card').removeClass('flipX');
+					$('.list-flip_nums .flip-num:eq(3) .top').text((seconds < 10) ? `0${seconds}` : seconds);
+					$('.list-flip_nums .flip-num:eq(3) .back .c-tc').text((seconds + 1 < 10) ? `0${seconds + 1}` : seconds + 1);
+					setTimeout(() => {
+						$('.list-flip_nums .flip-num:eq(3) .bottom-card').addClass('flipX');
+					}, 100);
+				}, 1000);
+			};
+			cownDownTimer();
+		});
+	</script>
+	<script>
+		$(window).on('load', function () {
+			$('.Loading').fadeOut(0);
+		});
+		function makeid(length) {
+			var result = '';
+			var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			var charactersLength = characters.length;
+			for (var i = 0; i < length; i++) {
+				result += characters.charAt(Math.floor(Math.random() * charactersLength));
+			}
+			return result;
+		}
+
+		function randMoney(max, min) {
+			var result = Math.floor(Math.random() * (max - min + 1) ) + min;
+			return result;
+		}
+
+		let wingo = '';
+		let k5d = '';
+		let k3 = '';
+		let top_nap = '';
+		let name = '';
+		let money = 0;
+		let player = 0;
+		function CreatMemJoin() {
+			for (let i = 0; i < 4; i++) {
+				name = makeid(5);
+				money = randMoney(1, 99929);
+				point = randMoney(01,99929);
+				wingo +=
+				`
+				<div data-v-39efd474="" class="van-swipe-item" style="height: 40px;">
+					<div data-v-39efd474="" class="swiper-item">
+						<div data-v-39efd474="" class="c-row c-row-between c-row-middle item">
+							<img data-v-39efd474="" src="/images/avatar.cfa8dd9d.svg" class="img">
+							<div data-v-39efd474="" class="info c-row c-row-between">
+								<div data-v-39efd474="" class="m-l-10 name">Member${name}</div>
+								<div data-v-39efd474="" class="c-row c-row-middle-center">
+									<span data-v-39efd474="" class="u-p-r-10" style="font-size:20px">Bet &nbsp;₹</span>
+									<span data-v-39efd474="" class="price" style="font-size:20px"> ${money}.${point}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				`;
+				name = makeid(5);
+				money = randMoney(1, 9999);
+				point = randMoney(01,9999);
+				k5d += 
+				`
+				<div data-v-39efd474="" class="van-swipe-item" style="height: 40px;">
+					<div data-v-39efd474="" class="swiper-item">
+						<div data-v-39efd474="" class="c-row c-row-between c-row-middle item">
+							<img data-v-39efd474="" src="/images/avatar.cfa8dd9d.svg" class="img">
+							<div data-v-39efd474="" class="info c-row c-row-between">
+								<div data-v-39efd474="" class="m-l-10 name">Member${name}</div>
+								<div data-v-39efd474="" class="c-row c-row-middle-center">
+									<span data-v-39efd474="" class="u-p-r-10" style="font-size:20px">Bet &nbsp;₹ </span>
+									<span data-v-39efd474="" class="price" style="font-size:20px"> ${money}.${point}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				`
+				;
+
+				name = makeid(5);
+				money = randMoney(1, 9929);
+				point = randMoney(01,9929);
+				k3 += 
+				`
+				<div data-v-39efd474="" class="van-swipe-item" style="height: 40px;">
+					<div data-v-39efd474="" class="swiper-item">
+						<div data-v-39efd474="" class="c-row c-row-between c-row-middle item">
+							<img data-v-39efd474="" src="/images/avatar.cfa8dd9d.svg" class="img">
+							<div data-v-39efd474="" class="info c-row c-row-between">
+								<div data-v-39efd474="" class="m-l-10 name">Member${name}</div>
+								<div data-v-39efd474="" class="c-row c-row-middle-center">
+									<span data-v-39efd474="" class="u-p-r-10" style="font-size:20px">Bet &nbsp;₹</span>
+									<span data-v-39efd474="" class="price" style="font-size:20px"> ${money}.${point}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				`
+				;
+			}
+			for (let i = 0; i < 4; i++) {
+				let list_recharge = '';
+				for (let i = 0; i < 4; i++) {
+					name = makeid(5);
+					money = randMoney(99999, 300);
+					point = randMoney(01, 99);
+					const d = new Date();
+					let hour = d.getHours();
+					let minutes = d.getMinutes();
+					list_recharge += `
+					<div data-v-e52eeae0="" class="swiper-item">
+						<div data-v-e52eeae0="" class="c-row c-row-between item">
+							<img data-v-e52eeae0="" src="/images/avatar.cfa8dd9d.svg" class="img">
+							<div data-v-e52eeae0="" class="info c-row c-row-between">
+								<div data-v-e52eeae0="" class="m-l-10 name">Member${name}</div>
+								<div data-v-e52eeae0="" class="price">
+									<span data-v-e52eeae0="">₹&nbsp; ${money}.${point}</span>
+								</div>
+								<div data-v-e52eeae0="" class="time">${hour}:${minutes}</div>
+							</div>
+						</div>
+					</div>
+					`;
+				}
+				top_nap += 
+				`
+				<div data-v-e52eeae0="" class="item van-swipe-item" style="height: 180px; ">
+					${list_recharge}
+				</div>
+				`;
+			}
+			$('#wingo').html(wingo);
+			$('#k5d').html(k5d);
+			$('#k3').html(k3);
+			$('#top-recharge').html(top_nap);
+		}
+
+
+		CreatMemJoin();
+		let translate = 0;
+		let count = 0;
+		let top_recharge = -358;
+		setInterval(() => {
+			count += 1;
+			translate -= 40;
+			top_recharge -= 180;
+			$('#wingo').css({
+				'transform': `translateY(${translate}px)`,
+			});
+			$('#k5d').css({
+				'transform': `translateY(${translate}px)`,
+			});
+
+			$('#k3').css({
+				'transform': `translateY(${translate}px)`,
+			});
+
+			$('#top-recharge').css({
+				'transform': `translateY(${top_recharge}px)`,
+			});
+			if(count == 3) {
+				count = 0;
+				translate = 40;
+				top_recharge = -358;
+				CreatMemJoin();
+			};
+		}, 3000);
+		
+	</script>
+	<script>
+	
+	document.getElementById('player').innerHTML = create_random_number(6)
+	
+	function create_random_number (string_length){
+	
+	   var random_string = '';
+	   var characters = '987654321'
+	   for(var i, i = 0; i < string_length; i++){
+	   
+	     random_string += characters.charAt(Math.floor(Math.random() * characters.length))
+	   
+	   }
+	   return random_string
+	}
+	
+	</script>
+	<script>
+	
+	document.getElementById('betting').innerHTML = create_random_number(6)
+	
+	function create_random_number (string_length){
+	
+	   var random_string = '';
+	   var characters = '123456789'
+	   for(var i, i = 0; i < string_length; i++){
+	   
+	     random_string += characters.charAt(Math.floor(Math.random() * characters.length))
+	   
+	   }
+	   return random_string
+	}
+	
+	</script>
+	<script>
+	
+	document.getElementById('online').innerHTML = create_random_number(4)
+	
+	function create_random_number (string_length){
+	
+	   var random_string = '';
+	   var characters = '123456789'
+	   for(var i, i = 0; i < string_length; i++){
+	   
+	     random_string += characters.charAt(Math.floor(Math.random() * characters.length))
+	   
+	   }
+	   return random_string
+	}
+	
+	</script>
+</body>
+
+</html>
