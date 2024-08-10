@@ -140,6 +140,7 @@ const userInfo = async (req, res) => {
                 name_user: others.name_user,
                 phone_user: others.phone,
                 money_user: user.money,
+                ai_balance: user.ai_balance,
                 total_money:user.total_money,
                 winning_wallet: others.win_wallet,
                 vip_level: others.vip_level,
