@@ -215,7 +215,7 @@
     }
     
     :root {
-        --main-color: #f95959;
+        --main-color: #edd38f;
         --main_gradient-color: linear-gradient(90deg, #ddb564 0%, #edd38f 100%);
         --main_gradient-color2: linear-gradient(180deg, #ddb564 0%, #edd38f 100%);
         --light-main_gradient-color: var(--main_gradient-color);
@@ -87555,7 +87555,7 @@ html:lang(ar) .WinTrx__C-head-more[data-v-ac90c264] {
     margin-bottom: .17333rem;
     padding: 0;
     font-weight: 500;
-    background: url(/images/home/bg-70e2d0c9.png) no-repeat center center;
+    /* background: url(/images/home/bg-70e2d0c9.png) no-repeat center center; */
     background-size: 100% 100%;
 }
 
