@@ -3134,6 +3134,9 @@ const useRedenvelope = async(req, res) => {
     };
     const [redenvelopes] = await connection.query(
         'SELECT * FROM redenvelopes WHERE id_redenvelope = ?', [code]);
+
+    const [userredenvelopes] = await connection.query(
+            'SELECT * FROM redenvelopes_used WHERE id_redenvelops = ? AND phone_used = ?', [code,userInfo.phone]);
         
     if (redenvelopes.length == 0) {
         return res.status(200).json({
@@ -3145,8 +3148,7 @@ const useRedenvelope = async(req, res) => {
         let infoRe = redenvelopes[0];
         const d = new Date();
         const time = d.getTime();
-        if (infoRe.status == 0) {
-            await connection.query('UPDATE redenvelopes SET used = ?, status = ? WHERE `id_redenvelope` = ? ', [0, 1, infoRe.id_redenvelope]); 
+        if (infoRe.status == 0 && userredenvelopes.length==0) {
             await connection.query('UPDATE users SET money = money + ? WHERE `phone` = ? ', [infoRe.money, userInfo.phone]); 
             let sql = 'INSERT INTO redenvelopes_used SET phone = ?, phone_used = ?, id_redenvelops = ?, money = ?, `time` = ? ';
             await connection.query(sql, [infoRe.phone, userInfo.phone, infoRe.id_redenvelope, infoRe.money, time]); 
