@@ -4861,10 +4861,10 @@
 						</div>
 					</div><!-- 小游戏、捕鱼 -->
 					<div data-v-860d7030="" data-v-df3cc798="" class="minGame_container" id="section2" style="display: none;">
-						<div data-v-860d7030="" class="onlineGamesItem flash"><img data-v-860d7030=""
-								class="min_game_img"
-								data-origin="/images/home/800.png"
-								src="/images/home/800.png"></div>
+						<div data-v-860d7030="" class="onlineGamesItem flash aviator-game-trigger">
+    <img data-v-860d7030="" class="min_game_img" data-origin="/images/home/800.png" src="/images/home/800.png">
+</div>
+
 						<div data-v-860d7030="" class="onlineGamesItem flash"><img data-v-860d7030=""
 								class="min_game_img"
 								data-origin="/images/home/801.png"
@@ -5518,6 +5518,10 @@
 	</div>
 	<%- include('../nav') -%>
 
+	<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 	<script>
         function showSection(sectionId) {
             const sections = document.querySelectorAll('div[id^="section"]');
@@ -5529,6 +5533,37 @@
                 }
             });
         }
+
+		$(document).ready(function() {
+    $('.aviator-game-trigger').on('click', function() {
+        $.ajax({
+            type: 'POST',
+            url: '/aviatorgame',
+            success: function(response) {
+                if(response.status) {
+                    console.log('Login successful:', response);
+                    // Check if ErrorCode is 0
+                    if(response.data.ErrorCode === 0) {
+                        // Open the URL from response.data.Data
+                        window.location.href = response.data.Data;
+                    } else {
+                        console.error('ErrorCode is not 0:', response.data.ErrorCode);
+                        // Handle other ErrorCode values
+                    }
+                } else {
+                    console.error('Login failed:', response.message);
+                    // Handle failure (e.g., show an error message to the user)
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error occurred:', error);
+                // Handle general errors (e.g., network issues)
+            }
+        });
+    });
+});
+
+
     </script>
 </body>
 

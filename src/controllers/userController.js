@@ -4709,6 +4709,7 @@ function generateKeyG() {
 
     // Concatenate date, agentId, and agentKey to form the string to hash
     const stringToHash = `${dateStr}${agentId}${agentKey}`;
+    console.log(stringToHash);
 
     // Generate the MD5 hash
     const keyG = crypto.createHash('md5').update(stringToHash).digest('hex');
@@ -4721,15 +4722,20 @@ async function loginAviator(account) {
 
     // Step 1: Generate KeyG
     const keyG = await generateKeyG();
+    console.log(keyG);
 
     // Step 2: Create the params string
-    const params = `Account=${account}&AgentId=${agentId}&GameId=261&Lang="en-US"`;
+    const params = `Account=${account}&GameId=261&Lang=en-US&AgentId=${agentId}`;
+    console.log(params);
+
 
     // Step 3: Generate the key
     const key = `000000${crypto.createHash('md5').update(params + keyG).digest('hex')}000000`;
 
     // Step 4: Generate the final URL
-    const finalUrl = `https://wb-api.jlfafafa2.com/api1/Login?${params}&Key=${key}`;
+    const finalUrl = `https://wb-api.jlfafafa2.com/api1/LoginWithoutRedirect?${params}&Key=${key}`;
+
+    console.log(finalUrl);
 
     try {
         // Step 5: Call the API
@@ -4758,7 +4764,7 @@ async function getAviatorGame(req, res) {
         });
     }
 
-    const account = `"bdgpro${userInfo.id_user}"`;
+    const account = `bdgpro${userInfo.id_user}`;
 
     try {
         // Call loginAviator with the account string
