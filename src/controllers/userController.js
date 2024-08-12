@@ -4690,6 +4690,95 @@ const updateUserTeamIncome = async () => {
 };
 
 
+function generateKeyG() {
+    const agentKey = '4ee779f236861f4bec5506a8c8a022e3a3f63528';
+    const agentId = 'John_Le_BDGPRO_INR';
+
+    // Get the current date in UTC-4
+    const currentDate = new Date();
+    currentDate.setUTCHours(currentDate.getUTCHours() - 4);
+
+    // Format the date string as yymmdd
+    const year = currentDate.getUTCFullYear().toString().slice(-2); // Last two digits of the year
+    const month = (currentDate.getUTCMonth() + 1).toString().padStart(2, '0'); // Month as a string with leading zero
+    const day = currentDate.getUTCDate().toString(); // Day as a string without leading zero
+
+    const dateStr = `${year}${month}${day}`;
+
+    // Concatenate date, agentId, and agentKey to form the string to hash
+    const stringToHash = `${dateStr}${agentId}${agentKey}`;
+
+    // Generate the MD5 hash
+    const keyG = crypto.createHash('md5').update(stringToHash).digest('hex');
+
+    return keyG;
+}
+
+async function loginAviator(account) {
+    const agentId = 'John_Le_BDGPRO_INR';
+
+    // Step 1: Generate KeyG
+    const keyG = await generateKeyG();
+
+    // Step 2: Create the params string
+    const params = `Account=${account}&AgentId=${agentId}&GameId=261&Lang="en-US"`;
+
+    // Step 3: Generate the key
+    const key = `000000${crypto.createHash('md5').update(params + keyG).digest('hex')}000000`;
+
+    // Step 4: Generate the final URL
+    const finalUrl = `https://wb-api.jlfafafa2.com/api1/Login?${params}&Key=${key}`;
+
+    try {
+        // Step 5: Call the API
+        const response = await axios.get(finalUrl);
+
+        console.log(response.data);
+        // Return the response from the API call
+        return response.data;
+    } catch (error) {
+        // Handle errors (e.g., network issues, API errors)
+        console.error('Error calling API:', error.message);
+        throw error;
+    }
+}
+
+async function getAviatorGame(req, res) {
+    let auth = req.cookies.auth;
+    const [user] = await connection.query('SELECT `id`, `phone`, `code`, `invite`, `id_user` FROM users WHERE `token` = ?', [auth]);
+    let userInfo = user[0];
+
+    if (!userInfo) {
+        return res.status(200).json({
+            message: 'Failed',
+            status: false,
+            timeStamp: new Date().toISOString(),
+        });
+    }
+
+    const account = `"bdgpro${userInfo.id_user}"`;
+
+    try {
+        // Call loginAviator with the account string
+        const loginResponse = await loginAviator(account);
+
+        return res.status(200).json({
+            message: 'Login successful',
+            status: true,
+            data: loginResponse,
+            timeStamp: new Date().toISOString(),
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Login failed',
+            status: false,
+            error: error.message,
+            timeStamp: new Date().toISOString(),
+        });
+    }
+}
+
+
 
 module.exports = {
     userInfo,
@@ -4750,5 +4839,6 @@ module.exports = {
     rebateBonus,
     searchRecharge,
     manualPayment,
-    updateTotalBet
+    updateTotalBet,
+    getAviatorGame
 }
