@@ -2210,6 +2210,17 @@ fs-extra@^11.2.0:
     jsonfile "^6.0.1"
     universalify "^2.0.0"
 
+<<<<<<< HEAD
+"function-bind@^1.1.2":
+  "integrity" "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="
+  "resolved" "https://registry.npmmirror.com/function-bind/-/function-bind-1.1.2.tgz"
+  "version" "1.1.2"
+
+"function.prototype.name@^1.1.6":
+  "integrity" "sha512-Z5kx79swU5P27WEayXM1tBi5Ze/lbIyiNgU3qyXUOf9b2rgXYyF9Dy9Cx+IQv/Lc8WCG6L82zwUPpSS9hGehIg=="
+  "resolved" "https://registry.npmmirror.com/function.prototype.name/-/function.prototype.name-1.1.6.tgz"
+  "version" "1.1.6"
+=======
 function-bind@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmmirror.com/function-bind/-/function-bind-1.1.2.tgz"
@@ -2219,6 +2230,7 @@ function.prototype.name@^1.1.6:
   version "1.1.6"
   resolved "https://registry.npmmirror.com/function.prototype.name/-/function.prototype.name-1.1.6.tgz"
   integrity sha512-Z5kx79swU5P27WEayXM1tBi5Ze/lbIyiNgU3qyXUOf9b2rgXYyF9Dy9Cx+IQv/Lc8WCG6L82zwUPpSS9hGehIg==
+>>>>>>> 581970cc65433f76bd6be413610e54458416135b
   dependencies:
     call-bind "^1.0.2"
     define-properties "^1.2.0"

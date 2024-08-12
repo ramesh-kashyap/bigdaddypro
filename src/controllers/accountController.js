@@ -1,7 +1,9 @@
 import connection from "../config/connectDB";
+const crypto = require('crypto');
 import jwt from 'jsonwebtoken'
 import md5 from "md5";
 import request from 'request';
+const axios = require('axios');
 import e from "express";
 require('dotenv').config();
 
@@ -101,6 +103,61 @@ const login = async(req, res) => {
 
 }
 
+function generateKeyG() {
+    const agentKey = '4ee779f236861f4bec5506a8c8a022e3a3f63528';
+    const agentId = 'John_Le_BDGPRO_INR';
+
+    // Get the current date in UTC-4
+    const currentDate = new Date();
+    currentDate.setUTCHours(currentDate.getUTCHours() - 4);
+
+    // Format the date string as yymmdd
+    const year = currentDate.getUTCFullYear().toString().slice(-2); // Last two digits of the year
+    const month = (currentDate.getUTCMonth() + 1).toString().padStart(2, '0'); // Month as a string with leading zero
+    const day = currentDate.getUTCDate().toString(); // Day as a string without leading zero
+
+    const dateStr = `${year}${month}${day}`;
+
+    // Concatenate date, agentId, and agentKey to form the string to hash
+    const stringToHash = `${dateStr}${agentId}${agentKey}`;
+
+    // Generate the MD5 hash
+    const keyG = crypto.createHash('md5').update(stringToHash).digest('hex');
+
+    return keyG;
+}
+
+// Function to generate the final URL with the account parameter and call the API
+async function generateMember(account) {
+    const agentId = 'John_Le_BDGPRO_INR';
+    
+    // Step 1: Generate KeyG
+    const keyG = generateKeyG();
+
+    // Step 2: Create the params string
+    const params = `Account=${account}&AgentId=${agentId}`;
+
+    // Step 3: Generate the key
+    const key = `000000${crypto.createHash('md5').update(params + keyG).digest('hex')}000000`;
+
+    // Step 4: Generate the final URL
+    const finalUrl = `https://wb-api.jlfafafa2.com/api1/CreateMember?${params}&Key=${key}`;
+
+    try {
+        // Step 5: Call the API
+        const response = await axios.get(finalUrl);
+
+        console.log(response.data);
+        // Return the response from the API call
+        return response.data;
+    } catch (error) {
+        // Handle errors (e.g., network issues, API errors)
+        console.error('Error calling API:', error.message);
+        throw error;
+    }
+}
+
+// Your existing register function
 const register = async (req, res) => {
     let now = new Date().getTime();
     let { username, pwd, invitecode } = req.body;
@@ -160,11 +217,16 @@ const register = async (req, res) => {
                     await connection.execute('INSERT INTO point_list SET phone = ?', [username]);
                     await connection.execute('INSERT INTO team_income SET phone = ?, code = ?, invite = ?, f1 = ?, f2 = ?, f3 = ?, f4 = ?, f5 = ?, f6 = ?, time = ?', [username, code, invitecode, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', time]);
 
-                     
                     const [user] = await connection.query('SELECT `id`, `phone`, `code`, `invite`, `attendance` FROM users WHERE `id_user` = ?', [id_user]);
                     let userInfo = user[0];
 
+                    // Step 6: Call generateMember with the account parameter as "bdgpro" + id_user
+                    const account = `bdgpro${id_user}`;
+                    console.log(account);
+                    const memberCreationResponse = await generateMember(account);
 
+                    // Handle the response from the API call to generateMember
+                    if (memberCreationResponse.ErrorCode === 0) {
                         const registrationBonus = 30; // Set your bonus amount here
                         const incomeSql = `INSERT INTO incomes (user_id, amount, comm, remarks, rname) VALUES (?, ?, ?, ?, ?)`;
                         await connection.execute(incomeSql, [userInfo.id, registrationBonus, registrationBonus, 'Registration Bonus', username]);
@@ -172,10 +234,17 @@ const register = async (req, res) => {
                         const updateUserMoneySql = 'UPDATE users SET money = money + ? WHERE id = ?';
                         await connection.execute(updateUserMoneySql, [registrationBonus, userInfo.id]);
 
-                    return res.status(200).json({
-                        message: 'Register Success',
-                        status: true
-                    });
+                        return res.status(200).json({
+                            message: 'Register Success',
+                            status: true
+                        });
+                    } else {
+                        return res.status(500).json({
+                            message: 'Member creation failed',
+                            status: false,
+                            error: memberCreationResponse.message
+                        });
+                    }
                 } else {
                     return res.status(200).json({
                         message: 'IP address has been registered',
@@ -197,7 +266,6 @@ const register = async (req, res) => {
         });
     }
 }
-
 
 
 const verifyCode = async(req, res) => {
