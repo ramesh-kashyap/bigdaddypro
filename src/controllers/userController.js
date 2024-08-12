@@ -4751,6 +4751,7 @@ async function loginAviator(account) {
     }
 }
 
+
 async function getAviatorGame(req, res) {
     let auth = req.cookies.auth;
     const [user] = await connection.query('SELECT `id`, `phone`, `code`, `invite`, `id_user` FROM users WHERE `token` = ?', [auth]);
@@ -4785,6 +4786,81 @@ async function getAviatorGame(req, res) {
         });
     }
 }
+
+async function exchangeTransfer(account, transactionId, amount, transferType) {
+    const agentId = 'John_Le_BDGPRO_INR';
+
+    // Step 1: Generate KeyG
+    const keyG = await generateKeyG();
+    console.log(keyG);
+
+    // Step 2: Create the params string
+    const params = `Account=${account}&TransactionId=${transactionId}&Amount=${amount}&TransferType=${transferType}&AgentId=${agentId}`;
+    console.log(params);
+
+    // Step 3: Generate the key
+    const key = `000000${crypto.createHash('md5').update(params + keyG).digest('hex')}000000`;
+
+    // Step 4: Generate the final URL
+    const finalUrl = `https://wb-api.jlfafafa2.com/api1/ExchangeTransferByAgentId?${params}&Key=${key}`;
+
+    console.log(finalUrl);
+
+    try {
+        // Step 5: Call the API
+        const response = await axios.get(finalUrl);
+
+        console.log(response.data);
+        // Return the response from the API call
+        return response.data;
+    } catch (error) {
+        // Handle errors (e.g., network issues, API errors)
+        console.error('Error calling API:', error.message);
+        throw error;
+    }
+}
+
+
+async function aviatorMoneySend(req, res) {
+    let auth = req.cookies.auth;
+    const [user] = await connection.query('SELECT `id`, `phone`, `code`, `invite`, `id_user`, `money` FROM users WHERE `token` = ?', [auth]);
+    let userInfo = user[0];
+
+    if (!userInfo) {
+        return res.status(200).json({
+            message: 'Failed',
+            status: false,
+            timeStamp: new Date().toISOString(),
+        });
+    }
+
+    const account = `bdgpro${userInfo.id_user}`;
+    const amount = userInfo.money;
+    const transferType = 2; // TransferType is set to 2
+
+    // Generate a unique transactionId
+    const transactionId = `${Date.now()}-${account}-${crypto.randomBytes(8).toString('hex')}`;
+
+    try {
+        // Call exchangeTransfer with the account, transactionId, amount, and transferType
+        const transferResponse = await exchangeTransfer(account, transactionId, amount, transferType);
+
+        return res.status(200).json({
+            message: 'Transfer successful',
+            status: true,
+            data: transferResponse,
+            timeStamp: new Date().toISOString(),
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Transfer failed',
+            status: false,
+            error: error.message,
+            timeStamp: new Date().toISOString(),
+        });
+    }
+}
+
 
 
 
@@ -4848,5 +4924,6 @@ module.exports = {
     searchRecharge,
     manualPayment,
     updateTotalBet,
-    getAviatorGame
+    getAviatorGame,
+    aviatorMoneySend
 }

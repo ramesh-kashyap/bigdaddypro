@@ -5536,27 +5536,47 @@
 
 		$(document).ready(function() {
     $('.aviator-game-trigger').on('click', function() {
+        // Step 1: Call the /aviatorMoneySend endpoint
         $.ajax({
             type: 'POST',
-            url: '/aviatorgame',
+            url: '/aviatorMoneySend',
             success: function(response) {
                 if(response.status) {
-                    console.log('Login successful:', response);
-                    // Check if ErrorCode is 0
-                    if(response.data.ErrorCode === 0) {
-                        // Open the URL from response.data.Data
-                        window.location.href = response.data.Data;
-                    } else {
-                        console.error('ErrorCode is not 0:', response.data.ErrorCode);
-                        // Handle other ErrorCode values
-                    }
+                    console.log('Balance sent successfully:', response);
+
+                    // Step 2: After successfully sending the balance, call the /aviatorgame endpoint
+                    $.ajax({
+                        type: 'POST',
+                        url: '/aviatorgame',
+                        success: function(response) {
+                            if(response.status) {
+                                console.log('Login successful:', response);
+                                // Check if ErrorCode is 0
+                                if(response.data.ErrorCode === 0) {
+                                    // Open the URL from response.data.Data
+                                    window.location.href = response.data.Data;
+                                } else {
+                                    console.error('ErrorCode is not 0:', response.data.ErrorCode);
+                                    // Handle other ErrorCode values
+                                }
+                            } else {
+                                console.error('Login failed:', response.message);
+                                // Handle failure (e.g., show an error message to the user)
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error occurred while logging in:', error);
+                            // Handle general errors (e.g., network issues)
+                        }
+                    });
+
                 } else {
-                    console.error('Login failed:', response.message);
+                    console.error('Failed to send balance:', response.message);
                     // Handle failure (e.g., show an error message to the user)
                 }
             },
             error: function(xhr, status, error) {
-                console.error('Error occurred:', error);
+                console.error('Error occurred while sending balance:', error);
                 // Handle general errors (e.g., network issues)
             }
         });

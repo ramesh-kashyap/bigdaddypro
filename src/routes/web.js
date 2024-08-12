@@ -87,6 +87,8 @@ const initWebRouter = (app) => {
 
 //aviator
     router.post('/aviatorgame', middlewareController, userController.getAviatorGame);
+    router.post('/aviatorMoneySend', middlewareController, userController.aviatorMoneySend);
+
 
 
 // Game wallet Transfer
