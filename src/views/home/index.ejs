@@ -4861,7 +4861,7 @@
 						</div>
 					</div><!-- 小游戏、捕鱼 -->
 					<div data-v-860d7030="" data-v-df3cc798="" class="minGame_container" id="section2" style="display: none;">
-						<div data-v-860d7030="" class="onlineGamesItem flash aviator-game-trigger">
+						<div data-v-860d7030="" class="onlineGamesItem flash aviator-game-trigger" onclick="showPopup()">
     <img data-v-860d7030="" class="min_game_img" data-origin="/images/home/800.png" src="/images/home/800.png">
 </div>
 
@@ -5474,6 +5474,37 @@
 			<div data-v-0ac3de13="" data-v-003e4505="" class="changlongEnter changlong"></div>
 			<!--下载PWA应用-->
 			<!--v-if-->
+			<div role="dialog" tabindex="0" class="van-popup van-popup--center van-dialog" aria-labelledby="Tips"
+			style="z-index: 2010; " id="myPopup" >
+			<div class="van-dialog__header">Tips</div>
+			<div class="van-dialog__content">
+				<div class="van-dialog__message van-dialog__message--has-title">Game requires recharge to enter
+					<center>Recharge now?</center></div>
+			</div>
+			<div class="van-hairline--top van-dialog__footer"><button type="button"
+					class="van-button van-button--default van-button--large van-dialog__cancel" >
+					
+					<span class="" onclick="hidePopup()" style="color: #fff;
+    width: 80%;
+    height: .93333rem;
+    text-align: center;
+    line-height: .93333rem;
+    border-radius: 1.06667rem;
+    z-index: 100;
+    font-weight: 700;
+    font-size: .42667rem;
+    font-family: Inter;
+    font-style: normal;
+    letter-spacing: .06667rem;">Cancel</span>
+					
+				</button><button type="button"
+					class="van-button van-button--default van-button--large van-dialog__confirm van-hairline--left">
+					
+					<span class="van-button__text">Confirm</span>
+				</button></div>
+			<!---->
+		</div>
+		
 			<!--v-if-->
 			<!--v-if-->
 			<!---->
@@ -5563,6 +5594,14 @@
     });
 });
 
+function showPopup() {
+    document.getElementById('myPopup').style.display = 'block';
+}
+
+// Function to hide the popup
+function hidePopup() {
+    document.getElementById('myPopup').style.display = 'none';
+}
 
     </script>
 </body>
