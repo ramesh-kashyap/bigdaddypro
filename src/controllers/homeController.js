@@ -11,6 +11,14 @@ const homePage = async(req, res) => {
     return res.render("home/index.ejs", { app }); 
 }
 
+const viewall = async(req, res) => {
+    return res.render("home/viewall.ejs"); 
+}
+
+const redeemgift = async(req, res) => {
+    return res.render("checkIn/redeemgift.ejs"); 
+}
+
 const checkInPage = async(req, res) => {
     return res.render("checkIn/checkIn.ejs"); 
 }
@@ -268,5 +276,7 @@ module.exports = {
     gamehistory,
     levelincome,
     teamCom,
-    rebatePage
+    rebatePage,
+    viewall,
+    redeemgift
 }
