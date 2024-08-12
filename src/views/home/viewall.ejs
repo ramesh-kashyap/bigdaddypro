@@ -4641,7 +4641,7 @@
 		                        <div class="fun-tab-item activeClassName" style="color: rgb(22, 119, 255);">
 		                            <div class="fun-tab-item__wrap">
 		                                <div class="fun-tab-item__label">
-		                                    <div onclick="showSection('section1')" data-v-0a9bf0c5="" class="tab_item tab_active"><img data-v-0a9bf0c5=""
+		                                    <div onclick="showSection('section1', this)" data-v-0a9bf0c5="" class="tab_item tab_active"><img data-v-0a9bf0c5=""
 		                                            class=""
 		                                            data-origin="/images/home/gamecategory_20240311141426883l.png"
 		                                            src="/images/home/gamecategory_20240311141426883l.png"><span
@@ -4653,7 +4653,7 @@
 		                        <div class="fun-tab-item" style="">
 		                            <div class="fun-tab-item__wrap">
 		                                <div class="fun-tab-item__label">
-		                                    <div onclick="showSection('section2')" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
+		                                    <div onclick="showSection('section2', this)" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
 		                                            data-origin="/images/home/gamecategory_20240311141435wkxx.png"
 		                                            src="/images/home/gamecategory_20240311141435wkxx.png"><span
 		                                            data-v-0a9bf0c5="">Mini games</span></div>
@@ -4664,7 +4664,7 @@
 		                        <div class="fun-tab-item" style="">
 		                            <div class="fun-tab-item__wrap">
 		                                <div class="fun-tab-item__label">
-		                                    <div onclick="showSection('section3')" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
+		                                    <div onclick="showSection('section3', this)" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
 		                                            data-origin="/images/home/gamecategory_20240311141445b3ka.png"
 		                                            src="/images/home/gamecategory_20240311141445b3ka.png"><span
 		                                            data-v-0a9bf0c5="">Popular</span></div>
@@ -4675,7 +4675,7 @@
 		                        <div class="fun-tab-item" style="">
 		                            <div class="fun-tab-item__wrap">
 		                                <div class="fun-tab-item__label">
-		                                    <div onclick="showSection('section4')" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
+		                                    <div onclick="showSection('section4', this)" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
 		                                            data-origin="/images/home/gamecategory_20240311141457h3ts.png"
 		                                            src="/images/home/gamecategory_20240311141457h3ts.png"><span
 		                                            data-v-0a9bf0c5="">Slots</span></div>
@@ -4686,7 +4686,7 @@
 		                        <div class="fun-tab-item" style="">
 		                            <div class="fun-tab-item__wrap">
 		                                <div class="fun-tab-item__label">
-		                                    <div onclick="showSection('section5')" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
+		                                    <div onclick="showSection('section5', this)" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
 		                                            data-origin="/images/home/gamecategory_20240311141515owja.png"
 		                                            src="/images/home/gamecategory_20240311141515owja.png"><span
 		                                            data-v-0a9bf0c5="">Fishing</span></div>
@@ -4697,7 +4697,7 @@
 		                        <div class="fun-tab-item" style="">
 		                            <div class="fun-tab-item__wrap">
 		                                <div class="fun-tab-item__label">
-		                                    <div onclick="showSection('section6')" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
+		                                    <div onclick="showSection('section6', this)" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
 		                                            data-origin="/images/home/gamecategory_202403111415086ujt.png"
 		                                            src="/images/home/gamecategory_202403111415086ujt.png"><span
 		                                            data-v-0a9bf0c5="">PVC</span></div>
@@ -4708,7 +4708,7 @@
 		                        <div class="fun-tab-item" style="">
 		                            <div class="fun-tab-item__wrap">
 		                                <div class="fun-tab-item__label">
-		                                    <div onclick="showSection('section7')" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
+		                                    <div onclick="showSection('section7', this)" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
 		                                            data-origin="/images/home/gamecategory_20240311141522uvco.png"
 		                                            src="/images/home/gamecategory_20240311141522uvco.png"><span
 		                                            data-v-0a9bf0c5="">Casino</span></div>
@@ -4719,7 +4719,7 @@
 		                        <div class="fun-tab-item" style="">
 		                            <div class="fun-tab-item__wrap">
 		                                <div class="fun-tab-item__label">
-		                                    <div onclick="showSection('section8')" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
+		                                    <div onclick="showSection('section8', this)" data-v-0a9bf0c5="" class="tab_item"><img data-v-0a9bf0c5="" class=""
 		                                            data-origin="/images/home/gamecategory_20240311141531fugo.png"
 		                                            src="/images/home/gamecategory_20240311141531fugo.png"><span
 		                                            data-v-0a9bf0c5="">Sports</span></div>
@@ -5400,10 +5400,8 @@
 	</body>
 	<script>
         function showSection(sectionId, clickedTab) {
-            const sections = document.querySelectorAll('div[id^="section"]');
+            const sections = document.querySelectorAll('div[id^="section"]');			
 
-			
-			
             sections.forEach(section => {
                 if (section.id === sectionId) {
                     section.style.display = 'grid';
@@ -5411,6 +5409,14 @@
                     section.style.display = 'none';
                 }
             });
+
+			const tabs = document.querySelectorAll('.fun-tab-item__label .tab_item');
+			tabs.forEach(tab => {
+             tab.classList.remove('tab_active');
+              });
+			  if (clickedTab) {
+             clickedTab.classList.add('tab_active');
+               }
         }
     </script>
 </html>
