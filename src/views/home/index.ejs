@@ -4861,7 +4861,7 @@
 						</div>
 					</div><!-- 小游戏、捕鱼 -->
 					<div data-v-860d7030="" data-v-df3cc798="" class="minGame_container" id="section2" style="display: none;">
-						<div data-v-860d7030="" class="onlineGamesItem flash aviator-game-trigger">
+						<div data-v-860d7030="" class="onlineGamesItem flash aviator-game-trigger" data-gameid="261">
     <img data-v-860d7030="" class="min_game_img" data-origin="/images/home/800.png" src="/images/home/800.png">
 </div>
 
@@ -5536,23 +5536,73 @@
 
 		$(document).ready(function() {
     $('.aviator-game-trigger').on('click', function() {
-        // Step 1: Call the /aviatorMoneySend endpoint
-        $.ajax({
-            type: 'POST',
-            url: '/aviatorMoneySend',
-            success: function(response) {
-                if(response.status) {
-                    console.log('Balance sent successfully:', response);
+        // Extract the gameId from the clicked element's data attribute
+        const gameId = $(this).data('gameid');
 
-                    // Step 2: After successfully sending the balance, call the /aviatorgame endpoint
+        // Step 1: Call the /api/webapi/GetUserInfo endpoint to get user information
+        $.ajax({
+            type: 'GET',
+            url: '/api/webapi/GetUserInfo',
+            success: function(userInfo) {
+				console.log(userInfo.data);
+                const { money_user, thirdparty_wallet } = userInfo.data;
+
+                if (money_user > 0) {
+                    // Step 2: Call the /aviatorMoneySend endpoint if the user has money
                     $.ajax({
                         type: 'POST',
-                        url: '/aviatorgame',
+                        url: '/aviatorMoneySend',
                         success: function(response) {
-                            if(response.status) {
+                            if (response.status) {
+                                console.log('Balance sent successfully:', response);
+
+                                // Step 3: After successfully sending the balance, call the /aviatorgame endpoint with the gameId
+                                $.ajax({
+                                    type: 'POST',
+                                    url: `/aviatorgame/${gameId}`,
+                                    success: function(response) {
+                                        if (response.status) {
+                                            console.log('Login successful:', response);
+                                            // Check if ErrorCode is 0
+                                            if (response.data.ErrorCode === 0) {
+                                                // Open the URL from response.data.Data
+                                                window.location.href = response.data.Data;
+                                            } else {
+                                                console.error('ErrorCode is not 0:', response.data.ErrorCode);
+                                                // Handle other ErrorCode values
+                                            }
+                                        } else {
+                                            console.error('Login failed:', response.message);
+                                            // Handle failure (e.g., show an error message to the user)
+                                        }
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Error occurred while logging in:', error);
+                                        // Handle general errors (e.g., network issues)
+                                    }
+                                });
+
+                            } else {
+                                console.error('Failed to send balance:', response.message);
+                                // Handle failure (e.g., show an error message to the user)
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error occurred while sending balance:', error);
+                            // Handle general errors (e.g., network issues)
+                        }
+                    });
+
+                } else if (thirdparty_wallet > 0) {
+                    // Step 4: Directly call the /aviatorgame endpoint if thirdparty_wallet > 0
+                    $.ajax({
+                        type: 'POST',
+                        url: `/aviatorgame/${gameId}`,
+                        success: function(response) {
+                            if (response.status) {
                                 console.log('Login successful:', response);
                                 // Check if ErrorCode is 0
-                                if(response.data.ErrorCode === 0) {
+                                if (response.data.ErrorCode === 0) {
                                     // Open the URL from response.data.Data
                                     window.location.href = response.data.Data;
                                 } else {
@@ -5571,17 +5621,19 @@
                     });
 
                 } else {
-                    console.error('Failed to send balance:', response.message);
-                    // Handle failure (e.g., show an error message to the user)
+                    // Insufficient balance case if neither money nor thirdparty_wallet is sufficient
+                    alert('Insufficient balance');
+                    console.error('Insufficient balance');
                 }
             },
             error: function(xhr, status, error) {
-                console.error('Error occurred while sending balance:', error);
+                console.error('Error occurred while getting user info:', error);
                 // Handle general errors (e.g., network issues)
             }
         });
     });
 });
+
 
 
     </script>
