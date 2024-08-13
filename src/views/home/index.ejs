@@ -4730,8 +4730,8 @@
 					<div data-v-c9ec78ed="" role="tab" class="van-sidebar-item van-sidebar-item--select" tabindex="0"
 						aria-selected="true" id="gameType-lottery">
 						<div class="van-badge__wrapper van-sidebar-item__text">
-							<div data-v-c9ec78ed="" class="whiteColor">
-								<div onclick="showSection('section1')" data-v-c9ec78ed=""
+							<div onclick="showSection('section1', this)" data-v-c9ec78ed="" class="one whiteColor">
+								<div  data-v-c9ec78ed=""
 									style="background-image: url(&quot;/images/home/gamecategory_20240311141426883l.png&quot;);">
 								</div> <p>Lottery</p>
 							</div>
@@ -4741,8 +4741,8 @@
 					<div data-v-c9ec78ed="" role="tab" class="van-sidebar-item" tabindex="0" aria-selected="false"
 						id="gameType-flash">
 						<div class="van-badge__wrapper van-sidebar-item__text">
-							<div data-v-c9ec78ed="" class="">
-								<div   onclick="showSection('section2')" data-v-c9ec78ed=""
+							<div onclick="showSection('section2', this)" data-v-c9ec78ed="" class="one">
+								<div   data-v-c9ec78ed=""
 									style="background-image: url(&quot;/images/home/gamecategory_20240311141435wkxx.png&quot;);">
 								</div> <p>Mini games</p>
 							</div>
@@ -4752,8 +4752,8 @@
 					<div data-v-c9ec78ed="" role="tab" class="van-sidebar-item" tabindex="0" aria-selected="false"
 						id="gameType-popular">
 						<div class="van-badge__wrapper van-sidebar-item__text">
-							<div data-v-c9ec78ed="" class="">
-								<div onclick="showSection('section3')" data-v-c9ec78ed=""
+							<div onclick="showSection('section3', this)" data-v-c9ec78ed="" class="one">
+								<div data-v-c9ec78ed=""
 									style="background-image: url(&quot;/images/home/gamecategory_20240311141445b3ka.png&quot;);">
 								</div> <p>Popular</p>
 							</div>
@@ -4763,8 +4763,8 @@
 					<div data-v-c9ec78ed="" role="tab" class="van-sidebar-item" tabindex="0" aria-selected="false"
 						id="gameType-slot">
 						<div class="van-badge__wrapper van-sidebar-item__text">
-							<div data-v-c9ec78ed="" class="">
-								<div onclick="showSection('section4')" data-v-c9ec78ed=""
+							<div onclick="showSection('section4', this)" data-v-c9ec78ed="" class="one">
+								<div data-v-c9ec78ed=""
 									style="background-image: url(&quot;/images/home/gamecategory_20240311141457h3ts.png&quot;);">
 								</div> <p>Slots</p>
 							</div>
@@ -4774,8 +4774,8 @@
 					<div data-v-c9ec78ed="" role="tab" class="van-sidebar-item" tabindex="0" aria-selected="false"
 						id="gameType-fish">
 						<div class="van-badge__wrapper van-sidebar-item__text">
-							<div data-v-c9ec78ed="" class="">
-								<div onclick="showSection('section5')" data-v-c9ec78ed=""
+							<div onclick="showSection('section5', this)" data-v-c9ec78ed="" class="one">
+								<div data-v-c9ec78ed=""
 									style="background-image: url(&quot;/images/home/gamecategory_20240311141515owja.png&quot;);">
 								</div> <p>Fishing</p>
 							</div>
@@ -4786,8 +4786,8 @@
 					<div data-v-c9ec78ed="" role="tab" class="van-sidebar-item" tabindex="0" aria-selected="false"
 						id="gameType-chess">
 						<div class="van-badge__wrapper van-sidebar-item__text">
-							<div data-v-c9ec78ed="" class="">
-								<div onclick="showSection('section6')" data-v-c9ec78ed=""
+							<div onclick="showSection('section6', this)" data-v-c9ec78ed="" class="one">
+								<div data-v-c9ec78ed=""
 									style="background-image: url(&quot;/images/home/gamecategory_202403111415086ujt.png&quot;);">
 								</div> <p>PVC</p>
 							</div>
@@ -4797,8 +4797,8 @@
 					<div data-v-c9ec78ed="" role="tab" class="van-sidebar-item" tabindex="0" aria-selected="false"
 						id="gameType-video">
 						<div class="van-badge__wrapper van-sidebar-item__text">
-							<div data-v-c9ec78ed="" class="">
-								<div onclick="showSection('section7')" data-v-c9ec78ed=""
+							<div onclick="showSection('section7', this)" data-v-c9ec78ed="" class="one">
+								<div data-v-c9ec78ed=""
 									style="background-image: url(&quot;/images/home/gamecategory_20240311141522uvco.png&quot;);">
 								</div> <p>Casino</p>
 							</div>
@@ -4808,8 +4808,8 @@
 					<div data-v-c9ec78ed="" role="tab" class="van-sidebar-item" tabindex="0" aria-selected="false"
 						id="gameType-sport">
 						<div class="van-badge__wrapper van-sidebar-item__text">
-							<div data-v-c9ec78ed="" class="">
-								<div onclick="showSection('section8')" data-v-c9ec78ed=""
+							<div onclick="showSection('section8', this)" data-v-c9ec78ed="" class="one">
+								<div data-v-c9ec78ed=""
 									style="background-image: url(&quot;/images/home/gamecategory_20240311141531fugo.png&quot;);">
 								</div> <p>Sports</p>
 							</div>
@@ -5561,7 +5561,7 @@
 
 
 	<script>
-        function showSection(sectionId) {
+        function showSection(sectionId, clickedTab) {
             const sections = document.querySelectorAll('div[id^="section"]');
             sections.forEach(section => {
                 if (section.id === sectionId) {
@@ -5570,7 +5570,21 @@
                     section.style.display = 'none';
                 }
             });
+
+
+			const tabs = document.querySelectorAll('.van-badge__wrapper.one');
+			tabs.forEach(tab => {
+             tab.classList.remove('whiteColor');
+              });
+			  if (clickedTab) {
+             clickedTab.classList.add('whiteColor');
+               }
+
+
         }
+		
+
+
 
 		$(document).ready(function() {
     $('.aviator-game-trigger').on('click', function() {
@@ -5616,7 +5630,7 @@
                                                 // Check if ErrorCode is 0
                                                 if (response.data.ErrorCode === 0) {
                                                     // Open the URL from response.data.Data
-                                                    window.location.href = response.data.Data;
+													window.open(response.data.Data, '_blank');
                                                 } else {
                                                     console.error('ErrorCode is not 0:', response.data.ErrorCode);
                                                     // Handle other ErrorCode values
@@ -5654,7 +5668,7 @@
                                     // Check if ErrorCode is 0
                                     if (response.data.ErrorCode === 0) {
                                         // Open the URL from response.data.Data
-                                        window.location.href = response.data.Data;
+										window.open(response.data.Data, '_blank');
                                     } else {
                                         console.error('ErrorCode is not 0:', response.data.ErrorCode);
                                         // Handle other ErrorCode values

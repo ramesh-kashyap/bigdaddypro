@@ -8013,7 +8013,7 @@
                             modelmodifiers="[object Object]">
                             <div class="van-cell__value van-field__value">
                                 <div class="van-field__body">
-                                    <input type=""id="van-field-17-input"  class="van-field__control" placeholder="Please enter the amount" fdprocessedid="u1in1">                                    
+                                    <input type="tel" id="van-field-17-input"  class="van-field__control" placeholder="Please enter the amount" fdprocessedid="u1in1">                                    
                                 </div>
                             </div>
                         </div>
@@ -8951,48 +8951,39 @@ input, button, textarea {
 
 
                 // transfer
-                $(document).ready(function() {
-    $('#submit-btn').click(function(e) {
-        e.preventDefault(); // Prevent the default button behavior
+                $('#submit-btn').click(function (e) { 
+                    console.log("hi");
+                e.preventDefault();
+                let amount = $('input:eq(0)').val().trim();
+                let password = $('input:eq(1)').val().trim();
 
-        // Get values from input fields
-        let amount = $('#amount-input').val().trim();
-        let password = $('#password-input').val().trim();
-
-        // Reference to the clicked button
-        let $button = $(this);
-
-        // Perform validation and AJAX request
-        if (amount && password) {
-            $.ajax({
-                type: "POST",
-                url: "/api/webapi/fundtransfer",
-                data: {
-                    amount: amount,
-                    password: password,
-                },
-                dataType: "json",
-                success: function(response) {
-                    // Add 'block-click' class to the button
-                    $button.addClass('block-click');
-
-                    // Handle response
-                    if (response.status) {
-                        $('.amount').text('₹' + response.money);
-                    }
-                    alertMess(response.message, $button);
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX Error:", status, error);
+                if (amount && password ) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/webapi/fundtransfer",
+                        data: {
+                            amount: amount,
+                            password: password,
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            $(this).addClass('block-click');
+                            if (response.status == true) {
+                                $('.amount').text('₹'+response.money);
+                            }
+                            alertMess(response.message, $(this));
+                        }
+                    });
+                } else if (!amount || !password) {
+                    $(this).addClass('block-click');
+                    alertMess('Please enter complete information', $(this));
+                } else {
+                    $(this).addClass('block-click');
+                    alertMess('Withdrawal amount range 1000-Unlimited', $(this));
                 }
             });
-        } else {
-            // Handle cases where input fields are empty
-            $button.addClass('block-click');
-            alertMess('Please enter complete information', $button);
-        }
-    });
-});
+
+
 
             </script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
