@@ -8646,342 +8646,261 @@ input, button, textarea {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="/js/client.js"></script>
         <script>
-            const exchangeRate = 90; // Example exchange rate, adjust as necessary
+$(document).ready(function () {
+    const exchangeRate = 90; // Example exchange rate
 
-            function calculateINR() {
-                const usdAmount = document.getElementById('usd_amount').value;
-                const inrAmount = (usdAmount / exchangeRate).toFixed(2);
-                document.getElementById('amountt').value = inrAmount;
+    // Calculate INR based on USD input
+    function calculateINR() {
+        const usdAmount = parseFloat($('#usd_amount').val().trim()) || 0;
+        const inrAmount = (usdAmount / exchangeRate).toFixed(2);
+        $('#amountt').val(inrAmount);
+    }
+
+    // Show alert message
+    function alertMess(text, element) {
+        $('body').append(`<div class="msg"><div class="msg-content">${text}</div></div>`);
+        setTimeout(() => {
+            $('.msg-content').removeClass('v-enter-active v-enter-to').addClass('v-leave-active v-leave-to');
+            setTimeout(() => {
+                $('.msg').remove();
+            }, 100);
+            element.removeClass('block-click');
+        }, 1000);
+    }
+
+    // Fetch user info and update UI
+    function updateUserInfo() {
+        $.ajax({
+            type: "GET",
+            url: "/api/webapi/GetUserInfo",
+            dataType: "json",
+            success: function (response) {
+                const user = response.data;
+                $('.wallet-user .name').text(user.name_user);
+                $('.money').text("₹" + user.ai_balance);
+            },
+            error: function () {
+                alertMess('Failed to load user information', $(this));
+            }
+        });
+    }
+
+    // Initial call to update user info
+    updateUserInfo();
+
+    // Refresh user info on click
+    $('#reload .van-image').on('click', function (e) {
+        e.preventDefault();
+        $(this).addClass('action block-click');
+        updateUserInfo();
+        setTimeout(() => {
+            $(this).removeClass('action block-click');
+        }, 2500);
+    });
+
+    // Enable/Disable button based on input
+    $('input').on('input', function () {
+        const value = $(this).val().trim();
+        $(".btn-list button").css({
+            'color': value ? 'rgb(255, 255, 255)' : 'rgb(255, 255, 255)',
+            'background': value ? 'rgb(92, 186, 71)' : 'rgb(181, 181, 181)',
+            'border-color': value ? 'rgb(92, 186, 71)' : 'rgb(181, 181, 181)'
+        });
+    });
+
+    // Handle payment selection
+    $('.pay-box .list .li').on('click', function (e) {
+        e.preventDefault();
+        const money = parseFloat($(this).attr('data-money'));
+        $('.pay-box .list .li').removeClass('action');
+        $(this).addClass('action');
+        $('#usd_amount').val(money.toFixed(2));
+        calculateINR();
+    });
+
+    // Payment method selection
+    $('.Recharge__container-tabcard__items').on('click', function () {
+        $('.Recharge__container-tabcard__items').removeClass('active');
+        $(this).addClass('active');
+        console.log($(this).data('payment'));
+    });
+
+    // Handle bank creation
+    $('#create-bank').on('click', function (e) {
+        e.preventDefault();
+        const money = parseFloat($('#usd_amount').val().trim());
+        const paymentType = $('.Recharge__container-tabcard__items.active').data('payment');
+
+        if (money && money >= 100 && money <= 50000) {
+            if (paymentType !== "UPI_ID" && money < 500) {
+                alertMess('Deposit amount range: 500 to 50000.00 in USDT Mode', $(this));
+                return false;
             }
 
-            function alertMess(text, sic) {
-                $('body').append(
-                    `<div data-v-1dcba851="" class="msg">
-                    <div data-v-1dcba851="" class="msg-content v-enter-active v-enter-to" style=""> ${text} </div>
-                </div>`
-                );
-                setTimeout(() => {
-                    $('.msg .msg-content').removeClass('v-enter-active v-enter-to');
-                    $('.msg .msg-content').addClass('v-leave-active v-leave-to');
-                    setTimeout(() => {
-                        $('.msg').remove();
-                    }, 100);
-                    sic.removeClass('block-click');
-                }, 1000);
+            if (paymentType === "UPI_ID") {
+                window.location = `/wallet/paymentPage?amount=${money}`;
+                return;
             }
-
-            $('#reload .van-image').click(function (e) {
-                e.preventDefault();
-                $(this).addClass('action block-click');
-                setTimeout(() => {
-                    $(this).removeClass('action block-click');
-                }, 2500);
-                $.ajax({
-                    type: "GET",
-                    url: "/api/webapi/GetUserInfo",
-                    dataType: "json",
-                    success: function (response) {
-                        let user = response.data;
-                        $('.wallet-user .name').text(user.name_user);
-                        $('.money').text("₹" + user.ai_balance);
-                    }
-                });
-            });
-
-            $.ajax({
-                type: "GET",
-                url: "/api/webapi/GetUserInfo",
-                dataType: "json",
-                success: function (response) {
-                    let user = response.data;
-                    $('.wallet-user .name').text(user.name_user);
-                    $('.money').text("₹" + user.ai_balance);
-                }
-            });
-
-            $('input').on('input', (e) => {
-                let value = $('input').val();
-                if (value == '') {
-                    $(".btn-list button").css({
-                        'color': 'rgb(255, 255, 255)',
-                        'background': 'rgb(181, 181, 181)',
-                        'border-color': 'rgb(181, 181, 181)',
-                    });
-                } else {
-                    $(".btn-list button").css({
-                        'color': 'rgb(255, 255, 255)',
-                        'background': 'rgb(92, 186, 71)',
-                        'border-color': 'rgb(92, 186, 71)',
-                    });
-                }
-            });
-
-            $('.pay-box .list .li').click(function (e) {
-                e.preventDefault();
-                let money = parseFloat($(this).attr('data-money'));
-                $('.pay-box .list .li').removeClass('action');
-                $(this).addClass('action');
-                $('#usd_amount').val(money.toFixed(2));
-                $('#amountt').val((money / exchangeRate).toFixed(2));
-            });
 
             $.ajax({
                 type: "POST",
-                url: "/api/webapi/recharge/check",
-                data: {
-                    checlk: "idCheclk",
-                },
+                url: "/api/webapi/createPayment10",
+                data: { money, typeid: paymentType },
                 dataType: "json",
                 success: function (response) {
-                    $('.Loading').fadeOut(50);
-                    let data = response.datas;
-                    if (!data) return;
+                    handlePaymentResponse(response, money);
+                },
+                error: function () {
+                    alertMess('Payment creation failed', $(this));
+                }
+            });
+        } else {
+            alertMess('Deposit amount range: 10.00~10,000.00', $(this));
+        }
+    });
+
+    // Handle payment response
+    function handlePaymentResponse(response, money) {
+        alertMess(response.message, $(this));
+        $('.Loading').fadeIn(0);
+        $('.create-payment').hide();
+        $('.confirmation').show();
+
+        if (response.paymentType === "UPI") {
+            handleUPIPayment(response, money);
+        } else {
+            handleCryptoPayment(response);
+        }
+
+        setTimeout(() => {
+            $('.Loading').fadeOut(0);
+        }, 1500);
+    }
+
+    function handleUPIPayment(response, money) {
+        $('.info .box .text:eq(0)').html("₹" + money);
+        $('#transaction_id').val(response.orderId);
+        const url = new URL(response.datas.qrData, 'http://localhost');
+        const paValue = new URLSearchParams(url.search).get('pa');
+        $('.info .box .text:eq(1)').text(paValue);
+        $("#qrcode").attr("src", `data:image/png;base64,${response.datas.image}`).css('width', '100%');
+        $('#currency').val(response.paymentType);
+    }
+
+    function handleCryptoPayment(response) {
+        $('.info .box .text:eq(0)').html(`$${response.datas.invoice_total_sum} (₹${(response.datas.amount * exchangeRate).toFixed(2)})`);
+        $('#transaction_id').val(response.datas.id);
+        $('.info .box .text:eq(1)').text(response.datas.wallet_hash);
+        $("#qrcode").attr("src", response.datas.qr_code);
+        $('#amount_in_usdt').val(response.datas.invoice_total_sum);
+        $('#url').val(response.datas.checkout_url);
+        $('#currency').val(response.paymentType);
+    }
+
+    // Handle transaction storage
+    function storeTransaction() {
+        const id = $('#transaction_id').val();
+        const currency = $('#currency').val();
+
+        if (id) {
+            $.ajax({
+                type: "POST",
+                url: "/api/webapi/rechargeCancel",
+                data: { id, currency, type: "success" },
+                dataType: "json",
+                success: function (response) {
+                    alertMess(response.message, $(this));
                     $('.create-payment').show();
                     $('.confirmation').hide();
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                },
+                error: function () {
+                    alertMess('Transaction storage failed', $(this));
                 }
             });
+        }
+    }
 
-            $('#href-bank').click(function (e) {
-                e.preventDefault();
-                $('#paytmForm').submit();
-                return true;
-            });
+    // Start transaction storage interval
+    storeTransaction();
+    setInterval(storeTransaction, 2000);
 
-
-            $('.pay-box:eq(0) .item').click(function (e) {
-                e.preventDefault();
-                $('.pay-box:eq(0) .item').removeClass('action');
-                $(this).addClass('action');
-                $('.pay-box:eq(0) .item').find('.icon').remove();
-                $(this).append(`<div data-v-67caa467="" class="icon">
-                                <i data-v-67caa467="" class="van-icon van-icon-success" style="color: rgb(255, 255, 255); font-size: 14px;"> </i>
-                            </div>`);
-            });
-
-            $('#create-bank').click(function (e) {
-                e.preventDefault();
-                $(this).addClass('block-click');
-                let money = $('#usd_amount').val().trim();
-                let type = $('.Recharge__container-tabcard__items.active').data(
-                    'payment'); // Get the value of the selected payment mode
-
-                if (money && money >= 100 && money <= 50000) {
-
-                    if (type != "UPI_ID" && money < 500) {
-                        $(this).addClass('block-click');
-                        alertMess('Deposit amount range: 500 to 50000.00 in USDT Mode', $(this));
-
-                        return false;
-                    }
-
-                    if (type == "UPI_ID") {
-
-                        window.location = '/wallet/paymentPage?amount=' + money;
-
-                        return
-                    }
-
-                    $.ajax({
-                        type: "POST",
-                        url: "/api/webapi/createPayment10",
-                        data: {
-                            money: money,
-                            typeid: type,
-                        },
-                        dataType: "json",
-                        success: function (response) {
-                            alertMess(response.message, $(this));
-                            $('.Loading').fadeIn(0);
-                            $('.create-payment').hide();
-                            $('.confirmation').show();
-                            if (response.paymentType == "UPI") {
-
-                                $('.info .box .text:eq(0)').html("₹" + money);
-                                $('#transaction_id').val(response.orderId);
-                                const url = new URL(response.datas.qrData,
-                                    'http://localhost'); // Base URL is required for URL constructor
-                                // Extract the parameters
-                                const params = new URLSearchParams(url.search);
-
-                                // Get the value of the 'pa' parameter
-                                const paValue = params.get('pa');
-
-                                $('.info .box .text:eq(1)').text(paValue);
-                                $("#qrcode").attr("src",
-                                    `data:image/png;base64,${response.datas.image}`).css(
-                                    'width', '100%');
-                                // Set QR code image src
-                                // $("#href-bank").css('display','block');
-                                $('#currency').val(response.paymentType);
-
-                            } else {
-                                $('.info .box .text:eq(0)').html("$" + response.datas
-                                    .invoice_total_sum + " (₹" + (
-                                        response.datas.amount * exchangeRate).toFixed(2) + ")");
-                                $('#transaction_id').val(response.datas.id);
-                                $('.info .box .text:eq(1)').text(response.datas.wallet_hash);
-                                // $("#href-bank").css('display','block');
-                                // Set QR code image src
-
-                                $("#qrcode").attr("src", response.datas.qr_code);
-
-                                $('#amount_in_usdt').val(response.datas.invoice_total_sum);
-                                $('#url').val(response.datas.checkout_url);
-                                $('#currency').val(response.paymentType);
-
-                            }
-
-                            setTimeout(() => {
-                                $('.Loading').fadeOut(0);
-                            }, 1500);
-                        }
-                    });
-                    return true;
+    // Handle transaction cancellation
+    $('.cancel').on('click', function (e) {
+        e.preventDefault();
+        if (confirm("Are you sure you want to cancel this transaction?")) {
+            const id = $('#transaction_id').val();
+            $.ajax({
+                type: "POST",
+                url: "/api/webapi/rechargeCancel",
+                data: { id, type: "cancel" },
+                dataType: "json",
+                success: function (response) {
+                    alertMess(response.message, $(this));
+                    $('.create-payment').show();
+                    $('.confirmation').hide();
+                    location.reload();
+                },
+                error: function () {
+                    alertMess('Cancellation failed', $(this));
                 }
-                $(this).addClass('block-click');
-                alertMess('Deposit amount range: 10.00~10,000.00', $(this));
             });
+        }
+    });
 
-            $('.cancel').click(function (e) {
-                e.preventDefault();
+    // Handle text copying
+    $('.info .box').on('click', function () {
+        const text = $(this).find('.text').text().trim();
+        navigator.clipboard.writeText(text).then(() => {
+            alertMess('Copy successful', $(this));
+        });
+    });
 
-                if (confirm("Are you sure you want to cancel this transaction?")) {
-                    let id = $('#transaction_id').val();
+    // Transfer functionality
+    $('#submit-btn').on('click', function (e) {
+    e.preventDefault();
+    const amount = $('input:eq(0)').val().trim();
+    const password = $('input:eq(1)').val().trim();
+    const submitBtn = $(this);
 
-                    $.ajax({
-                        type: "POST",
-                        url: "/api/webapi/rechargeCancel",
-                        data: {
-                            id: id,
-                            type: "cancel"
-                        },
-                        dataType: "json",
-                        success: function (response) {
-                            alertMess(response.message, $(this));
-                            $('.create-payment').show();
-                            $('.confirmation').hide();
-                            location.reload();
-                        }
-                    });
+    console.log('Submit button clicked');
+    console.log('Amount:', amount);
+    console.log('Password:', password);
 
-
-
+    if (amount && password) {
+        $.ajax({
+            type: "POST",
+            url: "/api/webapi/fundtransfer",
+            data: { amount, password },
+            dataType: "json",
+            beforeSend: function () {
+                console.log('AJAX request is being sent');
+                submitBtn.addClass('block-click');
+            },
+            success: function (response) {
+                console.log('AJAX request successful', response);
+                if (response.status === true) {
+                    $('.amount').text('₹' + response.money);
                 }
-
-            });
-
-            $('.info .box').click(function (e) {
-                let text = $(this).find('.text').text().trim();
-                navigator.clipboard.writeText(text);
-                $(this).addClass('block-click');
-                alertMess('Copy successful', $(this));
-            });
-
-            // Initialize the INR amount based on the default USD amount
-            $(document).ready(function () {
-                calculateINR();
-            });
-
-            document.addEventListener('DOMContentLoaded', () => {
-                const items = document.querySelectorAll('.Recharge__container-tabcard__items');
-
-                items.forEach(item => {
-                    item.addEventListener('click', () => {
-                        // Remove the active class from all items
-                        items.forEach(i => i.classList.remove('active'));
-
-                        // Add the active class to the clicked item
-                        item.classList.add('active');
-
-                        // Log the value of the selected payment mode
-                        const activeItem = document.querySelector(
-                            '.Recharge__container-tabcard__items.active');
-                        const paymentValue = activeItem.dataset.payment;
-                        console.log(paymentValue);
-                    });
-                });
-            });
-
-            // Update INR amount when USD amount changes
-            document.getElementById('usd_amount').addEventListener('input', calculateINR);
-
-
-            function storeTransaction() {
-
-                let id = $('#transaction_id').val();
-                let currency = $('#currency').val();
-
-
-                if (id) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/api/webapi/rechargeCancel",
-                        data: {
-                            id: id,
-                            currency: currency,
-                            type: "success"
-                        },
-                        dataType: "json",
-                        success: function (response) {
-
-                            if (response.message) {
-                                alertMess(response.message, $(this));
-                                $('.create-payment').show();
-                                $('.confirmation').hide();
-
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 1500);
-                            }
-
-                        }
-                    });
-                }
-
-
+                alertMess(response.message, submitBtn);
+            },
+            complete: function () {
+                console.log('AJAX request completed');
+                submitBtn.removeClass('block-click');
+            },
+            error: function () {
+                console.log('AJAX request failed');
+                alertMess('An error occurred, please try again.', submitBtn);
             }
+        });
+    } else {
+        console.log('Amount or password is missing');
+    }
+});
 
-            // Set the interval to 5 minutes (300,000 milliseconds)
-            const interval = 2000;
-
-            // Call the function immediately and then at the specified interval
-            storeTransaction(); // Call the function immediately
-            setInterval(storeTransaction, interval);
-
-
-
-                // transfer
-                $('#submit-btn').click(function (e) { 
-                    console.log("hi");
-                e.preventDefault();
-                let amount = $('input:eq(0)').val().trim();
-                let password = $('input:eq(1)').val().trim();
-
-                if (amount && password ) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/api/webapi/fundtransfer",
-                        data: {
-                            amount: amount,
-                            password: password,
-                        },
-                        dataType: "json",
-                        success: function (response) {
-                            $(this).addClass('block-click');
-                            if (response.status == true) {
-                                $('.amount').text('₹'+response.money);
-                            }
-                            alertMess(response.message, $(this));
-                        }
-                    });
-                } else if (!amount || !password) {
-                    $(this).addClass('block-click');
-                    alertMess('Please enter complete information', $(this));
-                } else {
-                    $(this).addClass('block-click');
-                    alertMess('Withdrawal amount range 1000-Unlimited', $(this));
-                }
-            });
+});
 
 
 
