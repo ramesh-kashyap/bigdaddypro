@@ -140,6 +140,7 @@ const userInfo = async (req, res) => {
                 name_user: others.name_user,
                 phone_user: others.phone,
                 money_user: user.money,
+                thirdparty_wallet: user.thirdparty_wallet,
                 ai_balance: user.ai_balance,
                 total_money:user.total_money,
                 winning_wallet: others.win_wallet,
@@ -4717,7 +4718,7 @@ function generateKeyG() {
     return keyG;
 }
 
-async function loginAviator(account) {
+async function loginAviator(account, gameId) {
     const agentId = 'John_Le_BDGPRO_INR';
 
     // Step 1: Generate KeyG
@@ -4725,9 +4726,8 @@ async function loginAviator(account) {
     console.log(keyG);
 
     // Step 2: Create the params string
-    const params = `Account=${account}&GameId=261&Lang=en-US&AgentId=${agentId}`;
+    const params = `Account=${account}&GameId=${gameId}&Lang=en-US&AgentId=${agentId}`;
     console.log(params);
-
 
     // Step 3: Generate the key
     const key = `000000${crypto.createHash('md5').update(params + keyG).digest('hex')}000000`;
@@ -4751,6 +4751,7 @@ async function loginAviator(account) {
     }
 }
 
+
 async function getAviatorGame(req, res) {
     let auth = req.cookies.auth;
     const [user] = await connection.query('SELECT `id`, `phone`, `code`, `invite`, `id_user` FROM users WHERE `token` = ?', [auth]);
@@ -4765,10 +4766,11 @@ async function getAviatorGame(req, res) {
     }
 
     const account = `bdgpro${userInfo.id_user}`;
+    const gameId = req.params.gameID; // Extract gameId from the request parameters
 
     try {
-        // Call loginAviator with the account string
-        const loginResponse = await loginAviator(account);
+        // Call loginAviator with the account string and gameId
+        const loginResponse = await loginAviator(account, gameId);
 
         return res.status(200).json({
             message: 'Login successful',
@@ -4785,6 +4787,107 @@ async function getAviatorGame(req, res) {
         });
     }
 }
+
+
+
+async function exchangeTransfer(account, transactionId, amount, transferType) {
+    const agentId = 'John_Le_BDGPRO_INR';
+
+    // Step 1: Generate KeyG
+    const keyG = await generateKeyG();
+    console.log(keyG);
+
+    // Step 2: Create the params string
+    const params = `Account=${account}&TransactionId=${transactionId}&Amount=${amount}&TransferType=${transferType}&AgentId=${agentId}`;
+    console.log(params);
+
+    // Step 3: Generate the key
+    const key = `000000${crypto.createHash('md5').update(params + keyG).digest('hex')}000000`;
+
+    // Step 4: Generate the final URL
+    const finalUrl = `https://wb-api.jlfafafa2.com/api1/ExchangeTransferByAgentId?${params}&Key=${key}`;
+
+    console.log(finalUrl);
+
+    try {
+        // Step 5: Call the API
+        const response = await axios.get(finalUrl);
+
+        console.log(response.data);
+        // Return the response from the API call
+        return response.data;
+    } catch (error) {
+        // Handle errors (e.g., network issues, API errors)
+        console.error('Error calling API:', error.message);
+        throw error;
+    }
+}
+
+
+async function aviatorMoneySend(req, res) {
+    let auth = req.cookies.auth;
+    const [user] = await connection.query('SELECT `id`, `phone`, `code`, `invite`, `id_user`, `money`, `thirdparty_wallet` FROM users WHERE `token` = ?', [auth]);
+    let userInfo = user[0];
+
+    if (!userInfo) {
+        return res.status(200).json({
+            message: 'Failed',
+            status: false,
+            timeStamp: new Date().toISOString(),
+        });
+    }
+
+    const account = `bdgpro${userInfo.id_user}`;
+    const amount = parseFloat(userInfo.money);
+    const transferType = 2; // TransferType is set to 2
+
+    // Generate a unique transactionId
+    const transactionId = `${Date.now()}-${account}-${crypto.randomBytes(8).toString('hex')}`;
+
+    try {
+        // Call exchangeTransfer with the account, transactionId, amount, and transferType
+        const transferResponse = await exchangeTransfer(account, transactionId, amount, transferType);
+
+        if (transferResponse.ErrorCode === 0) {
+            // Update the user's money to 0 and increment thirdparty_wallet
+            await connection.query(
+                'UPDATE users SET money = 0, thirdparty_wallet = thirdparty_wallet + ? WHERE id_user = ?',
+                [parseFloat(amount), userInfo.id_user]
+            );
+
+            // Insert the transaction into the money_transfer table
+            await connection.query(
+                'INSERT INTO money_transfer (uid, phone, amount, transfer_to, transfer_from, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [userInfo.id_user, userInfo.phone, amount, 'JiLi', 'bdgpro', new Date(), new Date()]
+            );
+
+            return res.status(200).json({
+                message: 'Transfer successful',
+                status: true,
+                data: transferResponse,
+                timeStamp: new Date().toISOString(),
+            });
+        } else {
+            // Handle cases where the transfer is not successful (ErrorCode is not 0)
+            return res.status(500).json({
+                message: 'Transfer failed',
+                status: false,
+                error: 'Transfer unsuccessful, please try again.',
+                timeStamp: new Date().toISOString(),
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Transfer failed',
+            status: false,
+            error: error.message,
+            timeStamp: new Date().toISOString(),
+        });
+    }
+}
+
+
+
 
 
 
@@ -4848,5 +4951,6 @@ module.exports = {
     searchRecharge,
     manualPayment,
     updateTotalBet,
-    getAviatorGame
+    getAviatorGame,
+    aviatorMoneySend
 }

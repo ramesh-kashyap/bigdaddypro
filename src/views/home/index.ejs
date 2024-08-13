@@ -4861,7 +4861,7 @@
 						</div>
 					</div><!-- 小游戏、捕鱼 -->
 					<div data-v-860d7030="" data-v-df3cc798="" class="minGame_container" id="section2" style="display: none;">
-						<div data-v-860d7030="" class="onlineGamesItem flash aviator-game-trigger" onclick="showPopup()">
+						<div data-v-860d7030="" class="onlineGamesItem flash aviator-game-trigger" data-gameid="261">
     <img data-v-860d7030="" class="min_game_img" data-origin="/images/home/800.png" src="/images/home/800.png">
 </div>
 
@@ -5478,7 +5478,7 @@
 
 			
 			<div role="dialog" tabindex="0" class="van-popup van-popup--center van-dialog" aria-labelledby="Tips"
-			style="z-index: 2010; " id="myPopup" >
+			style="z-index: 2010;display:none " id="myPopup" >
 			<div class="van-dialog__header">Tips</div>
 			<div class="van-dialog__content">
 				<div class="van-dialog__message van-dialog__message--has-title">Game requires recharge to enter
@@ -5574,41 +5574,130 @@
 
 		$(document).ready(function() {
     $('.aviator-game-trigger').on('click', function() {
-        $.ajax({
-            type: 'POST',
-            url: '/aviatorgame',
-            success: function(response) {
-                if(response.status) {
-                    console.log('Login successful:', response);
-                    // Check if ErrorCode is 0
-                    if(response.data.ErrorCode === 0) {
-                        // Open the URL from response.data.Data
-                        window.location.href = response.data.Data;
+        // Extract the gameId from the clicked element's data attribute
+        const gameId = $(this).data('gameid');
+
+        // Function to show the popup
+        function showPopup() {
+            document.getElementById('myPopup').style.display = 'block';
+        }
+
+        // Function to hide the popup
+        function hidePopup() {
+            document.getElementById('myPopup').style.display = 'none';
+        }
+
+        // Function to handle confirmation
+        function handleConfirmation() {
+            // Call the /api/webapi/GetUserInfo endpoint to get user information
+            $.ajax({
+                type: 'GET',
+                url: '/api/webapi/GetUserInfo',
+                success: function(userInfo) {
+                    console.log(userInfo.data);
+                    const { money_user, thirdparty_wallet } = userInfo.data;
+
+                    if (money_user > 0) {
+                        // Call the /aviatorMoneySend endpoint if the user has money
+                        $.ajax({
+                            type: 'POST',
+                            url: '/aviatorMoneySend',
+                            success: function(response) {
+                                if (response.status) {
+                                    console.log('Balance sent successfully:', response);
+
+                                    // After successfully sending the balance, call the /aviatorgame endpoint with the gameId
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: `/aviatorgame/${gameId}`,
+                                        success: function(response) {
+                                            if (response.status) {
+                                                console.log('Login successful:', response);
+                                                // Check if ErrorCode is 0
+                                                if (response.data.ErrorCode === 0) {
+                                                    // Open the URL from response.data.Data
+                                                    window.location.href = response.data.Data;
+                                                } else {
+                                                    console.error('ErrorCode is not 0:', response.data.ErrorCode);
+                                                    // Handle other ErrorCode values
+                                                }
+                                            } else {
+                                                console.error('Login failed:', response.message);
+                                                // Handle failure (e.g., show an error message to the user)
+                                            }
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error('Error occurred while logging in:', error);
+                                            // Handle general errors (e.g., network issues)
+                                        }
+                                    });
+
+                                } else {
+                                    console.error('Failed to send balance:', response.message);
+                                    // Handle failure (e.g., show an error message to the user)
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error occurred while sending balance:', error);
+                                // Handle general errors (e.g., network issues)
+                            }
+                        });
+
+                    } else if (thirdparty_wallet > 0) {
+                        // Directly call the /aviatorgame endpoint if thirdparty_wallet > 0
+                        $.ajax({
+                            type: 'POST',
+                            url: `/aviatorgame/${gameId}`,
+                            success: function(response) {
+                                if (response.status) {
+                                    console.log('Login successful:', response);
+                                    // Check if ErrorCode is 0
+                                    if (response.data.ErrorCode === 0) {
+                                        // Open the URL from response.data.Data
+                                        window.location.href = response.data.Data;
+                                    } else {
+                                        console.error('ErrorCode is not 0:', response.data.ErrorCode);
+                                        // Handle other ErrorCode values
+                                    }
+                                } else {
+                                    console.error('Login failed:', response.message);
+                                    // Handle failure (e.g., show an error message to the user)
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error occurred while logging in:', error);
+                                // Handle general errors (e.g., network issues)
+                            }
+                        });
+
                     } else {
-                        console.error('ErrorCode is not 0:', response.data.ErrorCode);
-                        // Handle other ErrorCode values
+                        // Show the popup if balance is insufficient
+                        showPopup();
                     }
-                } else {
-                    console.error('Login failed:', response.message);
-                    // Handle failure (e.g., show an error message to the user)
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error occurred while getting user info:', error);
+                    // Handle general errors (e.g., network issues)
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error occurred:', error);
-                // Handle general errors (e.g., network issues)
-            }
+            });
+        }
+
+        // Attach event handlers to the popup buttons
+        $(document).on('click', '.van-dialog__cancel', function() {
+            hidePopup();
         });
+
+        $(document).on('click', '.van-dialog__confirm', function() {
+            hidePopup();
+            handleConfirmation();
+        });
+
+        // Show popup and wait for user confirmation
+        showPopup();
     });
 });
 
-function showPopup() {
-    document.getElementById('myPopup').style.display = 'block';
-}
 
-// Function to hide the popup
-function hidePopup() {
-    document.getElementById('myPopup').style.display = 'none';
-}
 
     </script>
 </body>
