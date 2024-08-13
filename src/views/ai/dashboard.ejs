@@ -8074,26 +8074,8 @@
                         </svg>
                         <h1 data-v-30972a14="">Withdrawal history</h1>
                     </div>
-                    <div data-v-30972a14="" class="rechargeh__container-content">
-                        <div data-v-30972a14="" class="rechargeh__container-content__item">
-                            <!-- <div class="rechargeh__container-content__item-header ar-1px-b" @click="onToDetail(item.state)"> -->
-                            <div data-v-30972a14="" class="rechargeh__container-content__item-header ar-1px-b"><span
-                                    data-v-30972a14="">Withdraw</span><span data-v-30972a14="" class="stateG">Completed
-                                    <!-- <van-icon name="arrow" /> --></span></div>
-                            <div data-v-30972a14="" class="rechargeh__container-content__item-body">
-                                <div data-v-30972a14=""><span data-v-30972a14="">Balance</span><span
-                                        data-v-30972a14="">₹8,500.00</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Type</span><span data-v-30972a14="">
-                                        BANK CARD</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Time</span><span
-                                        data-v-30972a14="">2024-07-03 08:33:40</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Order number</span><span
-                                        data-v-30972a14="">WD2024070308334034505675b</span><svg data-v-30972a14=""
-                                        class="svg-icon icon-copy">
-                                        <use xlink:href="#icon-copy"></use>
-                                    </svg></div>
-                            </div>
-                        </div>
+                    <div data-v-30972a14="" class="rechargeh__container-content" id="van-list">
+                        
                        
                     </div>
                     <div data-v-30972a14="" class="rechargeh__container-footer"><button data-v-30972a14=""
@@ -9073,6 +9055,41 @@ input, button, textarea {
                 }
                 $(this).addClass('block-click');
                 alertMess('Deposit amount range: 100.00~10,000.00', $(this));
+            });
+
+            function MemRender(datas) {
+                let html = '';
+                datas.map((data) => {
+                    html += `
+                    <div data-v-30972a14="" class="rechargeh__container-content__item">
+                            <!-- <div class="rechargeh__container-content__item-header ar-1px-b" @click="onToDetail(item.state)"> -->
+                            <div data-v-30972a14="" class="rechargeh__container-content__item-header ar-1px-b"><span
+                                    data-v-30972a14="">Withdraw</span><span data-v-30972a14="" class="stateG">Completed
+                                    <!-- <van-icon name="arrow" /> --></span></div>
+                            <div data-v-30972a14="" class="rechargeh__container-content__item-body">
+                                <div data-v-30972a14=""><span data-v-30972a14="">Balance</span><span
+                                        data-v-30972a14="">₹${data.amount}</span></div>
+                                <div data-v-30972a14=""><span data-v-30972a14="">Type</span><span data-v-30972a14="">
+                                        ${data.status}</span></div>
+                                <div data-v-30972a14=""><span data-v-30972a14="">Time</span><span
+                                        data-v-30972a14="">${timerJoin(data.created_at)}</span></div>
+                                <div data-v-30972a14=""><span data-v-30972a14="">Order number</span><span
+                                        data-v-30972a14="">WD2024070308334034505675b</span><svg data-v-30972a14=""
+                                        class="svg-icon icon-copy">
+                                        <use xlink:href="#icon-copy"></use>
+                                    </svg></div>
+                            </div>
+                        </div>`;
+                });
+                $('#van-list').html(html);
+            }
+            $.ajax({
+                type: "GET",
+                url: "/api/webapi/fundTransferReport", 
+                dataType: "json",
+                success: function (response) {
+                    MemRender(response.fundTransfers);
+                }
             });
 
         </script>
