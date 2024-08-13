@@ -5609,7 +5609,7 @@
                                                 // Check if ErrorCode is 0
                                                 if (response.data.ErrorCode === 0) {
                                                     // Open the URL from response.data.Data
-                                                    window.location.href = response.data.Data;
+													window.open(response.data.Data, '_blank');
                                                 } else {
                                                     console.error('ErrorCode is not 0:', response.data.ErrorCode);
                                                     // Handle other ErrorCode values
@@ -5647,7 +5647,7 @@
                                     // Check if ErrorCode is 0
                                     if (response.data.ErrorCode === 0) {
                                         // Open the URL from response.data.Data
-                                        window.location.href = response.data.Data;
+										window.open(response.data.Data, '_blank');
                                     } else {
                                         console.error('ErrorCode is not 0:', response.data.ErrorCode);
                                         // Handle other ErrorCode values
