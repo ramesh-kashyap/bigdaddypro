@@ -8011,54 +8011,24 @@
                         <div data-v-9e03166f="" class="place-div">₹</div>
                         <div data-v-9e03166f="" class="van-cell van-field amount-input"
                             modelmodifiers="[object Object]">
-                            <!---->
-                            <!---->
                             <div class="van-cell__value van-field__value">
-                                <div class="van-field__body"><input type="tel" inputmode="numeric"
-                                        id="van-field-17-input" class="van-field__control"
-                                        placeholder="Please enter the amount" fdprocessedid="u1in1">
-                                    <!---->
-                                    <!---->
-                                    <!---->
+                                <div class="van-field__body">
+                                    <input type=""id="van-field-17-input"  class="van-field__control" placeholder="Please enter the amount" fdprocessedid="u1in1">                                    
                                 </div>
-                                <!---->
-                                <!---->
                             </div>
-                            <!---->
-                            <!---->
                         </div>
-                        <!--v-if-->
-
-                        <!--v-if-->
                     </div>
-
                     <div data-v-9e03166f="" class="Recharge__content-paymoney__money-input" style="margin-top:10px">
                         <div data-v-9e03166f="" class="van-cell van-field amount-input"
                             modelmodifiers="[object Object]">
-                            <!---->
-                            <!---->
                             <div class="van-cell__value van-field__value">
-                                <div class="van-field__body"><input type="tel" inputmode="numeric"
-                                        id="van-field-17-input" class="van-field__control"
-                                        placeholder="Please enter Password" fdprocessedid="u1in1">
-                                    <!---->
-                                    <!---->
-                                    <!---->
-                                </div>
-                                <!---->
-                                <!---->
+                                <div class="van-field__body">
+                                    <input type="tel" inputmode="numeric" id="van-field-17-input" class="van-field__control" placeholder="Please enter Password" >
+                                 </div>
                             </div>
-                            <!---->
-                            <!---->
                         </div>
-                        <!--v-if-->
-
-                        <!--v-if-->
                     </div>
-
-
-                    <!--v-if-->
-                    <div data-v-9e03166f="" class="Recharge__container-rechageBtn rechage_active">Deposit</div>
+                    <button id="submit-btn"  data-v-9e03166f="" class="Recharge__container-rechageBtn rechage_active">Deposit</button>
                 </div>
 
                 <div data-v-7cba6004="" data-v-36cc3380="" class="Recharge__container-intro">
@@ -8977,7 +8947,55 @@ input, button, textarea {
             // Call the function immediately and then at the specified interval
             storeTransaction(); // Call the function immediately
             setInterval(storeTransaction, interval);
-        </script>
+
+
+
+                // transfer
+                $(document).ready(function() {
+    $('#submit-btn').click(function(e) {
+        e.preventDefault(); // Prevent the default button behavior
+
+        // Get values from input fields
+        let amount = $('#amount-input').val().trim();
+        let password = $('#password-input').val().trim();
+
+        // Reference to the clicked button
+        let $button = $(this);
+
+        // Perform validation and AJAX request
+        if (amount && password) {
+            $.ajax({
+                type: "POST",
+                url: "/api/webapi/fundtransfer",
+                data: {
+                    amount: amount,
+                    password: password,
+                },
+                dataType: "json",
+                success: function(response) {
+                    // Add 'block-click' class to the button
+                    $button.addClass('block-click');
+
+                    // Handle response
+                    if (response.status) {
+                        $('.amount').text('₹' + response.money);
+                    }
+                    alertMess(response.message, $button);
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                }
+            });
+        } else {
+            // Handle cases where input fields are empty
+            $button.addClass('block-click');
+            alertMess('Please enter complete information', $button);
+        }
+    });
+});
+
+            </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 
 
