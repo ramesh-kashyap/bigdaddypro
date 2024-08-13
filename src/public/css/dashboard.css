@@ -55035,7 +55035,7 @@ html:lang(ar) .hot_container .platform .list .win-odds .win-p[data-v-d06787cb],h
     position: absolute;
     bottom: .26667rem;
     left: .4rem;
-    white-space: pre-wrap;
+    /* white-space: pre-wrap; */
     text-align: left;
     /* line-height: .46667rem; */
     opacity: .7
@@ -87948,7 +87948,8 @@ html:lang(ar) .WinTrx__C-head-more[data-v-ac90c264] {
     -webkit-flex-grow: 1;
     flex-grow: 1;
     gap: .26667rem;
-    width: 90%
+    width: 90%;
+    margin-left: 16px;
 }
 
 
