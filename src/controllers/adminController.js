@@ -681,8 +681,8 @@ const rechargeDuyet = async (req, res) => {
             const rechargeInfo = info[0];
 
             // Update user's money
-            await connection.query('UPDATE users SET money = money + ?, total_money = total_money + ? WHERE phone = ?', 
-                [rechargeInfo.money, rechargeInfo.money, rechargeInfo.phone]);
+            await connection.query('UPDATE users SET money = money + ?, total_money = total_money + ?,able_to_bet = able_to_bet + ? WHERE phone = ?', 
+                [rechargeInfo.money, rechargeInfo.money,rechargeInfo.money, rechargeInfo.phone]);
 
             // Check if this is the first recharge for this phone
             const [rowCount] = await connection.query('SELECT COUNT(*) as count FROM recharge WHERE phone = ? AND status = ?', 
