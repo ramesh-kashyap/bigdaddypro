@@ -8519,7 +8519,7 @@
             dataType: "json",
             success: function (response) {
                 let user = response.userInfo[0];
-                $('.money').text("₹" + user.win_wallet);
+                $('.money').text("₹" + user.money);
                 $('.withdrawn').text("₹" + response.withdrawn);
                 
                 $('.bet-amt').text("₹"+ response.result);
@@ -8614,7 +8614,7 @@
             dataType: "json",
             success: function (response) {
                 let user = response.userInfo[0];
-                $('.money').text("₹" + user.win_wallet);
+                $('.money').text("₹" + user.money);
                 $('.withdrawn').text("₹" + response.withdrawn);
                 
                 $('.bankBox .box .item:eq(1) div:eq(1)').text(`2.Total bet amount ₹ ${response.result}`);

@@ -231,8 +231,8 @@ const register = async (req, res) => {
                         const incomeSql = `INSERT INTO incomes (user_id, amount, comm, remarks, rname) VALUES (?, ?, ?, ?, ?)`;
                         await connection.execute(incomeSql, [userInfo.id, registrationBonus, registrationBonus, 'Registration Bonus', username]);
 
-                        const updateUserMoneySql = 'UPDATE users SET money = money + ? WHERE id = ?';
-                        await connection.execute(updateUserMoneySql, [registrationBonus, userInfo.id]);
+                        const updateUserMoneySql = 'UPDATE users SET money = money + ?, able_to_bet = able_to_bet + ? WHERE id = ?';
+                         await connection.execute(updateUserMoneySql, [registrationBonus, registrationBonus, userInfo.id]);
 
                         return res.status(200).json({
                             message: 'Register Success',

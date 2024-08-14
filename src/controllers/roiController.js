@@ -8,7 +8,7 @@ const roiCalculation = async () => {
 
         for (let fund of activeFunds) {
             const { id: fundId, user_id: userId, amount } = fund;
-            const maxRoi = 2 * amount;
+            const maxRoi = 3 * amount;
 
             // Calculate total ROI given so far
             const [totalRoiResult] = await connection.query('SELECT SUM(comm) as total_roi_given FROM incomes WHERE fund_id = ?', [fundId]);
@@ -40,7 +40,7 @@ const roiCalculation = async () => {
             );
 
             // Update the user's balance in the users table
-            await connection.query('UPDATE users SET win_wallet = win_wallet + ? WHERE id = ?', [roiAmount, userId]);
+            await connection.query('UPDATE users SET money = money + ? WHERE id = ?', [roiAmount, userId]);
 
             // Call rosesPlus function to handle commissions
             const [user] = await connection.query('SELECT phone FROM users WHERE id = ?', [userId]);
@@ -75,12 +75,12 @@ const rosesPlus = async (phone, money) => {
         console.log('User info fetched:', userInfo);
 
         // Define the commission rates based on the provided table
-        const commissionRates = [0,10, 8, 6, 4, 3, 1, 1, 0.5, 0.5, 0.5];
+        const commissionRates = [0,10, 5, 4, 3, 2, 1, 1,1, 1,1, 0.5, 0.5, 0.5, 0.5, 0.5];
 
         let currentUser = userInfo;
         let cnt = 1;
 
-        while (currentUser.invite && cnt<=10 && currentUser.invite!=0) {
+        while (currentUser.invite && cnt<=15 && currentUser.invite!=0) {
             const [inviter] = await connection.query('SELECT `id`, `phone`, `code`, `invite` FROM users WHERE code = ? AND veri = 1 LIMIT 1', [currentUser.invite]);
             if (inviter.length === 0) {
                 console.log('Inviter not found or not verified');
@@ -93,7 +93,7 @@ const rosesPlus = async (phone, money) => {
             let commission = (money / 100) * commissionRates[cnt];
             if (commission > 0 ) {
                 // Update the inviter's money and roses information
-                await connection.query('UPDATE users SET win_wallet = win_wallet + ?, roses_f = roses_f + ?, roses_today = roses_today + ? WHERE phone = ?', 
+                await connection.query('UPDATE users SET money = money + ?, roses_f = roses_f + ?, roses_today = roses_today + ? WHERE phone = ?', 
                                        [commission, commission, commission, inviterInfo.phone]);
                 console.log(`Level ${cnt} inviter money and roses updated:`, inviterInfo.phone, commission);
 

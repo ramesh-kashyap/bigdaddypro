@@ -1219,7 +1219,7 @@ async function plusMoney(game) {
             }
             nhan_duoc += price * get;
             await connection.execute('UPDATE `result_k3` SET `get` = ?, `status` = 1 WHERE `id` = ? ', [nhan_duoc, id]);
-            const sql = 'UPDATE `users` SET `win_wallet` = `win_wallet` + ? WHERE `phone` = ? ';
+            const sql = 'UPDATE `users` SET `money` = `money` + ? WHERE `phone` = ? ';
             await connection.execute(sql, [nhan_duoc, phone]);
         }
         nhan_duoc = 0;
@@ -1284,7 +1284,7 @@ async function plusMoney(game) {
             nhan_duoc -= orders.fee;
 
             await connection.execute('UPDATE `result_k3` SET `get` = ?, `status` = 1 WHERE `id` = ? ', [nhan_duoc, id]);
-            const sql = 'UPDATE `users` SET `win_wallet` = `win_wallet` + ? WHERE `phone` = ? ';
+            const sql = 'UPDATE `users` SET `money` = `money` + ? WHERE `phone` = ? ';
             await connection.execute(sql, [nhan_duoc, phone]);
         }
 
@@ -1319,7 +1319,7 @@ async function plusMoney(game) {
                 nhan_duoc += total * 34.56 - orders.fee;
             }
             await connection.execute('UPDATE `result_k3` SET `get` = ?, `status` = 1 WHERE `id` = ? ', [nhan_duoc, id]);
-            const sql = 'UPDATE `users` SET `win_wallet` = `win_wallet` + ? WHERE `phone` = ? ';
+            const sql = 'UPDATE `users` SET `money` = `money` + ? WHERE `phone` = ? ';
             await connection.execute(sql, [nhan_duoc, phone]);
         }
 
@@ -1386,7 +1386,7 @@ async function plusMoney(game) {
                 }
             }
             await connection.execute('UPDATE `result_k3` SET `get` = ?, `status` = 1 WHERE `id` = ? ', [nhan_duoc, id]);
-            const sql = 'UPDATE `users` SET `win_wallet` = `win_wallet` + ? WHERE `phone` = ? ';
+            const sql = 'UPDATE `users` SET `money` = `money` + ? WHERE `phone` = ? ';
             await connection.execute(sql, [nhan_duoc, phone]);
         }
     }
