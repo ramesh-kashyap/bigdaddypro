@@ -8028,7 +8028,9 @@
                             </div>
                         </div>
                     </div>
-                    <button id="submit-btn"  data-v-9e03166f="" class="Recharge__container-rechageBtn rechage_active">Deposit</button>
+                    <div id="dash-invest">
+                    <button id="submit-btn"   data-v-9e03166f="" class="Recharge__container-rechageBtn rechage_active">Deposit</button>
+                    </div>
                 </div>
 
                 <div data-v-7cba6004="" data-v-36cc3380="" class="Recharge__container-intro">
@@ -8046,12 +8048,13 @@
                         <!--v-if-->
                         <!-- 一般三方和本地银行充值 -->
                         <div data-v-7cba6004="" class="item">
-                            <p data-v-7cba6004="">If the transfer time is up, please fill out the deposit form again.
+                            <p data-v-7cba6004="">first 10,000 users Get profit sharing of Big Daddy Pro 
+                                every day!
                             </p>
-                            <p data-v-7cba6004="">The transfer amount must match the order you created, otherwise the
-                                money cannot be credited successfully.</p>
-                            <p data-v-7cba6004="">If you transfer the wrong amount, our company will not be responsible
-                                for the lost amount!</p>
+                            <p data-v-7cba6004="">Receive your share on your balance with a minimum 
+                                deposit of $100 and up.</p>
+                            <p data-v-7cba6004="">Now also 
+                                get extra profit from your 15-level team's ROI.</p>
                             <!--v-if-->
                             <p data-v-7cba6004="">Note: do not cancel the deposit order after the money has been
                                 transferred.</p>
@@ -8071,26 +8074,8 @@
                         </svg>
                         <h1 data-v-30972a14="">Withdrawal history</h1>
                     </div>
-                    <div data-v-30972a14="" class="rechargeh__container-content">
-                        <div data-v-30972a14="" class="rechargeh__container-content__item">
-                            <!-- <div class="rechargeh__container-content__item-header ar-1px-b" @click="onToDetail(item.state)"> -->
-                            <div data-v-30972a14="" class="rechargeh__container-content__item-header ar-1px-b"><span
-                                    data-v-30972a14="">Withdraw</span><span data-v-30972a14="" class="stateG">Completed
-                                    <!-- <van-icon name="arrow" /> --></span></div>
-                            <div data-v-30972a14="" class="rechargeh__container-content__item-body">
-                                <div data-v-30972a14=""><span data-v-30972a14="">Balance</span><span
-                                        data-v-30972a14="">₹8,500.00</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Type</span><span data-v-30972a14="">
-                                        BANK CARD</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Time</span><span
-                                        data-v-30972a14="">2024-07-03 08:33:40</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Order number</span><span
-                                        data-v-30972a14="">WD2024070308334034505675b</span><svg data-v-30972a14=""
-                                        class="svg-icon icon-copy">
-                                        <use xlink:href="#icon-copy"></use>
-                                    </svg></div>
-                            </div>
-                        </div>
+                    <div data-v-30972a14="" class="rechargeh__container-content" id="van-list">
+                        
                        
                     </div>
                     <div data-v-30972a14="" class="rechargeh__container-footer"><button data-v-30972a14=""
@@ -8906,6 +8891,127 @@ $(document).ready(function () {
 
             </script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>           
+
+            $('#dash-invest').click(function (e) {
+                e.preventDefault();
+                $(this).addClass('block-click');
+                let money = $('#van-field-17-input').val().trim();
+                let type = $('.Recharge__container-tabcard__items.active').data(
+                    'payment'); // Get the value of the selected payment mode
+
+                if (money && money >= 100 && money <= 50000) {
+
+                    if (type != "UPI_ID" && money < 500) {
+                        $(this).addClass('block-click');
+                        alertMess('Deposit amount range: 500 to 50000.00 in USDT Mode', $(this));
+
+                        return false;
+                    }
+
+                    if (type=="UPI_ID")
+                     {
+                   
+                        window.location = '/wallet/paymentPage?amount=' + money;
+
+                        return 
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/webapi/createPayment10",
+                        data: {
+                            money: money,
+                            typeid: type,
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            alertMess(response.message, $(this));
+                            $('.Loading').fadeIn(0);
+                            $('.create-payment').hide();
+                            $('.confirmation').show();
+                            if (response.paymentType == "UPI") {
+
+                                $('.info .box .text:eq(0)').html("₹" + money);
+                                $('#transaction_id').val(response.orderId);
+                                const url = new URL(response.datas.qrData, 'http://localhost'); // Base URL is required for URL constructor
+                                // Extract the parameters
+                                const params = new URLSearchParams(url.search);
+
+                                // Get the value of the 'pa' parameter
+                                const paValue = params.get('pa');
+
+                                $('.info .box .text:eq(1)').text(paValue);
+                                $("#qrcode").attr("src", `data:image/png;base64,${response.datas.image}`).css('width', '100%');
+                                // Set QR code image src
+                                // $("#href-bank").css('display','block');
+                                $('#currency').val(response.paymentType);
+
+                            }
+                            else {
+                                $('.info .box .text:eq(0)').html("$" + response.datas.invoice_total_sum + " (₹" + (
+                                    response.datas.amount * exchangeRate).toFixed(2) + ")");
+                                $('#transaction_id').val(response.datas.id);
+                                $('.info .box .text:eq(1)').text(response.datas.wallet_hash);
+                                // $("#href-bank").css('display','block');
+                                // Set QR code image src
+
+                                $("#qrcode").attr("src", response.datas.qr_code);
+
+                                $('#amount_in_usdt').val(response.datas.invoice_total_sum);
+                                $('#url').val(response.datas.checkout_url);
+                                $('#currency').val(response.paymentType);
+
+                            }
+
+                            setTimeout(() => {
+                                $('.Loading').fadeOut(0);
+                            }, 1500);
+                        }
+                    });
+                    return true;
+                }
+                $(this).addClass('block-click');
+                alertMess('Deposit amount range: 100.00~10,000.00', $(this));
+            });
+
+            function MemRender(datas) {
+                let html = '';
+                datas.map((data) => {
+                    html += `
+                    <div data-v-30972a14="" class="rechargeh__container-content__item">
+                            <!-- <div class="rechargeh__container-content__item-header ar-1px-b" @click="onToDetail(item.state)"> -->
+                            <div data-v-30972a14="" class="rechargeh__container-content__item-header ar-1px-b"><span
+                                    data-v-30972a14="">Withdraw</span><span data-v-30972a14="" class="stateG">Completed
+                                    <!-- <van-icon name="arrow" /> --></span></div>
+                            <div data-v-30972a14="" class="rechargeh__container-content__item-body">
+                                <div data-v-30972a14=""><span data-v-30972a14="">Balance</span><span
+                                        data-v-30972a14="">₹${data.amount}</span></div>
+                                <div data-v-30972a14=""><span data-v-30972a14="">Type</span><span data-v-30972a14="">
+                                        ${data.status}</span></div>
+                                <div data-v-30972a14=""><span data-v-30972a14="">Time</span><span
+                                        data-v-30972a14="">${timerJoin(data.created_at)}</span></div>
+                                <div data-v-30972a14=""><span data-v-30972a14="">Order number</span><span
+                                        data-v-30972a14="">WD2024070308334034505675b</span><svg data-v-30972a14=""
+                                        class="svg-icon icon-copy">
+                                        <use xlink:href="#icon-copy"></use>
+                                    </svg></div>
+                            </div>
+                        </div>`;
+                });
+                $('#van-list').html(html);
+            }
+            $.ajax({
+                type: "GET",
+                url: "/api/webapi/fundTransferReport", 
+                dataType: "json",
+                success: function (response) {
+                    MemRender(response.fundTransfers);
+                }
+            });
+
+        </script>
 </body>
 
 
