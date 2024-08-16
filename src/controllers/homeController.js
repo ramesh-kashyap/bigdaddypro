@@ -19,6 +19,10 @@ const redeemgift = async(req, res) => {
     return res.render("checkIn/redeemgift.ejs"); 
 }
 
+const shareHistory = async(req, res) => {
+    return res.render("ai/sharehistory.ejs"); 
+}
+
 const checkInPage = async(req, res) => {
     return res.render("checkIn/checkIn.ejs"); 
 }
@@ -278,5 +282,6 @@ module.exports = {
     teamCom,
     rebatePage,
     viewall,
-    redeemgift
+    redeemgift,
+    shareHistory
 }

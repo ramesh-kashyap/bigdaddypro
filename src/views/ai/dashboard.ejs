@@ -8029,7 +8029,7 @@
                         </div>
                     </div>
                     <div id="dash-invest">
-                    <button id="submit-btn"   data-v-9e03166f="" class="Recharge__container-rechageBtn rechage_active">Deposit</button>
+                    <button id="submit-btn"   data-v-9e03166f="" class="Recharge__container-rechageBtn rechage_active">Buy Shares</button>
                     </div>
                 </div>
 
@@ -8038,7 +8038,7 @@
                         <div data-v-7cba6004="" class="img"><svg data-v-7cba6004="" class="svg-icon icon-shuoming">
                                 <use xlink:href="#icon-shuoming"></use>
                             </svg></div>
-                        <p data-v-7cba6004="">Recharge instructions</p>
+                        <p data-v-7cba6004="">Shares instructions</p>
                     </div>
                     <div data-v-7cba6004="" class="Recharge__container-intro__lists">
                         <!--v-if-->
@@ -8070,16 +8070,16 @@
                 <div data-v-30972a14="" data-v-80a607a5="" class="rechargeh__container">
                     <div data-v-30972a14="" class="rechargeh__container-head"><svg data-v-30972a14=""
                             class="svg-icon icon-historyHead">
-                            <use xlink:href="#icon-historyHead"></use>
+                            <use xlink:href="/shareHistory"></use>
                         </svg>
-                        <h1 data-v-30972a14="">Withdrawal history</h1>
+                        <h1 data-v-30972a14="">Shares history</h1>
                     </div>
                     <div data-v-30972a14="" class="rechargeh__container-content" id="van-list">
                         
                        
                     </div>
-                    <div data-v-30972a14="" class="rechargeh__container-footer"><button data-v-30972a14=""
-                            fdprocessedid="kjracg">All history</button></div>
+                    <a href="/shareHistory" data-v-30972a14="" class="rechargeh__container-footer"><button id="redirect" data-v-30972a14=""
+                            fdprocessedid="kjracg">All history</button></a>
                 </div>
 
                 <style>
@@ -8976,24 +8976,40 @@ $(document).ready(function () {
                 alertMess('Deposit amount range: 100.00~10,000.00', $(this));
             });
 
+
+
+
+
+            function formateT(params) {
+                let result = (params < 10) ? "0" + params : params;
+                return result;
+            }
+            function timerJoin(dateString) {
+                let date = new Date(dateString);
+                let years = formateT(date.getFullYear());
+                let months = formateT(date.getMonth() + 1);
+                let days = formateT(date.getDate());
+                return years + '-' + months + '-' + days;
+            }
+
             function MemRender(datas) {
                 let html = '';
+                const limitedData = datas.slice(0, 5);
                 datas.map((data) => {
-                    html += `
+                    html +=`
                     <div data-v-30972a14="" class="rechargeh__container-content__item">
                             <!-- <div class="rechargeh__container-content__item-header ar-1px-b" @click="onToDetail(item.state)"> -->
                             <div data-v-30972a14="" class="rechargeh__container-content__item-header ar-1px-b"><span
-                                    data-v-30972a14="">Withdraw</span><span data-v-30972a14="" class="stateG">Completed
+                                    data-v-30972a14="">Shares</span><span data-v-30972a14="" class="stateG">Completed
                                     <!-- <van-icon name="arrow" /> --></span></div>
                             <div data-v-30972a14="" class="rechargeh__container-content__item-body">
-                                <div data-v-30972a14=""><span data-v-30972a14="">Balance</span><span
+                                <div data-v-30972a14=""><span data-v-30972a14="">Share Amount</span><span
                                         data-v-30972a14="">₹${data.amount}</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Type</span><span data-v-30972a14="">
+                                <div data-v-30972a14=""><span data-v-30972a14="">Status</span><span data-v-30972a14="">
                                         ${data.status}</span></div>
                                 <div data-v-30972a14=""><span data-v-30972a14="">Time</span><span
                                         data-v-30972a14="">${timerJoin(data.created_at)}</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Order number</span><span
-                                        data-v-30972a14="">WD2024070308334034505675b</span><svg data-v-30972a14=""
+                                <div data-v-30972a14=""><svg data-v-30972a14=""
                                         class="svg-icon icon-copy">
                                         <use xlink:href="#icon-copy"></use>
                                     </svg></div>

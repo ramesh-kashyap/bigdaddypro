@@ -38,6 +38,8 @@ const initWebRouter = (app) => {
     router.get('/rebatePage', middlewareController, homeController.rebatePage);
     router.get('/viewall', middlewareController, homeController.viewall);
     router.get('/RedeemGift', middlewareController, homeController.redeemgift);
+    router.get('/shareHistory', middlewareController, homeController.shareHistory);
+
 
     router.get('/activity', middlewareController, homeController.activityPage);
     router.get('/InvitationBonus', middlewareController, homeController.InvitationBonus);
