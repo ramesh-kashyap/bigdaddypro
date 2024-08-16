@@ -33,5 +33,7 @@
 	"Promotion": "Promotion",
 	"Wallet": "Wallet",
 	"Account": "Account",
-	"Details": "Details"
+	"Details": "Details",
+	"Guess green/purple/red to <br>win the game": "Guess green/purple/red to <br>win the game",
+	"Guess the number/big/<br>small/odd/even": "Guess the number/big/<br>small/odd/even"
 }
