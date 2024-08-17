@@ -258,7 +258,7 @@
 			<div data-v-c9ec78ed="" data-v-003e4505="" class="gameList">
 				<div data-v-c9ec78ed="" role="tablist" class="van-sidebar mySideBar">
 					<div data-v-c9ec78ed="" role="tab" class="van-sidebar-item van-sidebar-item--select" tabindex="0"
-						aria-selected="true" id="gameType-lottery">
+						aria-selected="true" id="gameType-lottery" style="">
 						<div class="van-badge__wrapper van-sidebar-item__text">
 							<div onclick="showSection('section1', this)" data-v-c9ec78ed="" class="one whiteColor">
 								<div  data-v-c9ec78ed=""
@@ -274,7 +274,7 @@
 							<div onclick="showSection('section2', this)" data-v-c9ec78ed="" class="one">
 								<div   data-v-c9ec78ed=""
 									style="background-image: url(&quot;/images/home/gamecategory_20240311141435wkxx.png&quot;);">
-								</div> <p>Mini games</p>
+								</div> <p>Mini</p>
 							</div>
 							<!---->
 						</div>
@@ -1036,6 +1036,12 @@
 			  if (clickedTab) {
              clickedTab.classList.add('whiteColor');
                }
+
+			   const cls = document.querySelectorAll('.van-badge__wrapper >div[data-v-c9ec78ed]');
+			   if (clickedTab) {
+        clickedTab.classList.add('#d9ac4f;');
+        clickedTab.style.backgroundColor = '#d9ac4f;';
+    }
 
 
         }
