@@ -55,7 +55,7 @@
         --van-button-primary-background: var(--main-color);
         --van-button-primary-border-color: var(--main-color)
     }
-    
+
     .van-toast[data-v-12a80a3e] {
         word-break: break-word!important
     }
@@ -54695,20 +54695,37 @@ html:lang(ar) .hot_container .platform .list .win-odds .win-p[data-v-d06787cb],h
     margin-bottom: .4rem
 }
 
+@media (max-width: 480px) {
+    .hot_container .platform .list[data-v-d06787cb], 
+    .hot_container .popular .list[data-v-d06787cb] {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 0.18667rem;
+    }
+}
+
 .onlineGamesItem[data-v-860d7030] {
-    width: 3.25333rem;
-    height: 3.25333rem;
+    width: 100%;
+    height: -webkit-fit-content;
+    height: fit-content;
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
     justify-content: center;
     -webkit-box-align: center;
     -webkit-align-items: center;
     align-items: center;
-    background: var(--main_gradient-color2);
-    grid-gap: .18667rem
+    color: var(--textW);
+    margin-bottom: .26667rem;
+    position: relative;
+    border-radius: .10667rem;
+    overflow: hidden;
 }
 
 .onlineGamesItem .fish_img[data-v-860d7030] {
@@ -54784,7 +54801,7 @@ html:lang(ar) .hot_container .platform .list .win-odds .win-p[data-v-d06787cb],h
 }
 
 .lotterySlotItem img[data-v-acaadf81] {
-    height: 100%
+    height: 75%
 }
 
 .lotterySlotItem span[data-v-acaadf81] {
@@ -54926,17 +54943,29 @@ html:lang(ar) .hot_container .platform .list .win-odds .win-p[data-v-d06787cb],h
 }
 
 .onlineGamesItem__container .item[data-v-54337c48] {
-    width: 3.36rem;
-    height: 4.26667rem;
-    background: var(--main_gradient-color2);
-    border-radius: .26667rem
-}
+    width: 100%;
+    height: -webkit-fit-content;
+    height: fit-content;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    color: var(--textW);
+    margin-bottom: .26667rem;
+    position: relative;
+    border-radius: .10667rem;
+    overflow: hidden;
+    }
 
-.onlineGamesItem__container .item .gameImg[data-v-54337c48] {
-    width: 3.36rem;
-    height: 4.26667rem;
-    border-radius: .26667rem
-}
 
 .allGame[data-v-54337c48] {
     grid-template-columns: repeat(3,1fr)
@@ -87094,7 +87123,7 @@ html:lang(ar) .WinTrx__C-head-more[data-v-ac90c264] {
     -webkit-box-align: center;
     -webkit-align-items: center;
     align-items: center;
-    width: 3rem;
+    width: 2rem;
     height: 3.46667rem
 }
 
@@ -87166,7 +87195,7 @@ html:lang(ar) .WinTrx__C-head-more[data-v-ac90c264] {
 }
 
 .dailyProfitRank__content-topThree__item>span[data-v-84514e8e]:last-of-type {
-    width: 2.66667rem;
+    width: 2.3rem;
     height: .66667rem;
     padding: .17333rem .18667rem;
     font-size: .32rem;
@@ -87787,14 +87816,6 @@ html:lang(ar) .WinTrx__C-head-more[data-v-ac90c264] {
     height: fit-content;
     min-height: 100vh;
 } */
-html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-    padding: 0;
-    margin: 0;
-    font: inherit;
-    font-size: 100%;
-    vertical-align: baseline;
-    border: 0;
-}
 element.style {
     display: none;
     --f13b4d11-currentFontFamily: 'Roboto', 'Inter', sans-serif;
@@ -87807,33 +87828,7 @@ element.style {
     left: 0;
     position: fixed;
 }
-html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-    padding: 0;
-    margin: 0;
-    font: inherit;
-    font-size: 100%;
-    vertical-align: baseline;
-    border: 0;
-}
-.ar-loading-view .loading-wrapper[data-v-647954c7] {
-    pointer-events: none;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-    height: 100%;
-    position: absolute;
-    width: 100%;
-}
-.ar-loading-view .loading-animat[data-v-647954c7] {
-    width: 4rem;
-    height: 4rem;
-}
+
 html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     padding: 0;
     margin: 0;
@@ -89554,13 +89549,13 @@ body #app .luckyWinners__container>h1 {
     color: var(--main-color)
 }
 
-body #app .dailyProfitRank__content-topThree {
+/* body #app .dailyProfitRank__content-topThree {
     background: url(/images/home/Daily.png);
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
     color: var(--text_color_L4)
-}
+} */
 
 body #app .dailyProfitRank__content-topThree__item>span {
     background: transparent;
@@ -90932,10 +90927,10 @@ textarea {
     width: 2rem;
     height: .66667rem;
     margin-left: auto;
-    color: var(--main-color);
+    color: #fff;
     border: .01333rem solid var(--main-color);
     border-radius: .53333rem;
-    background: #fff
+    background: #d9ac4f
 }
 
 .noticeBar__container button.hotIcon:before {
@@ -90946,7 +90941,7 @@ textarea {
     background-position: left;
     background-repeat: no-repeat;
     background-size: .32rem;
-    background-image: url(/images/home/redhomeN-2dd7b3a2.svg)
+    background-image: url(/images/home/fire.svg)
 }
 
 :root {
