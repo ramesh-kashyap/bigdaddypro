@@ -8675,7 +8675,7 @@ input, button, textarea {
                 function calculateINR() {
                     const usdAmount = parseFloat($('#usd_amount').val().trim()) || 0;
                     const inrAmount = (usdAmount / exchangeRate).toFixed(2);
-                    $('#amountt').val(inrAmount);
+                    $('#amount').val(inrAmount);
                 }
             
                 // Show alert message
@@ -8804,25 +8804,31 @@ input, button, textarea {
             
             <script>
             function MemRender(datas) {
-                let html = '';
-                const limitedData = datas.slice(0, 5);
-                datas.map((data) => {
-                    html +=`
-                    <div data-v-30972a14="" class="rechargeh__container-content__item">
-                            <div data-v-30972a14="" class="rechargeh__container-content__item-header ar-1px-b">
-                                <span data-v-30972a14="">Profit Share</span>
-                                <span data-v-30972a14="" class="stateG">Completed</span>
-                            </div>
-                            <div data-v-30972a14="" class="rechargeh__container-content__item-body">
-                                <div data-v-30972a14=""><span data-v-30972a14="">Amount</span><span data-v-30972a14="">₹${data.amount}</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Type</span><span data-v-30972a14="">${data.status}</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Time</span><span data-v-30972a14="">${data.created_at}</span></div>
-                            </div>
-                        </div>`;
-                });
-                $('#van-list').html(html);
-            }
-            
+    let html = '';
+
+    // Limit the data to the first 5 entries
+    const limitedData = datas.slice(0, 5);
+    
+    // Iterate over the limited data
+    limitedData.forEach((data) => {
+        html += `
+        <div data-v-30972a14="" class="rechargeh__container-content__item">
+            <div data-v-30972a14="" class="rechargeh__container-content__item-header ar-1px-b">
+                <span data-v-30972a14="">Profit Share</span>
+                <span data-v-30972a14="" class="stateG">Completed</span>
+            </div>
+            <div data-v-30972a14="" class="rechargeh__container-content__item-body">
+                <div data-v-30972a14=""><span data-v-30972a14="">Amount</span><span data-v-30972a14="">₹${data.amount}</span></div>
+                <div data-v-30972a14=""><span data-v-30972a14="">Type</span><span data-v-30972a14="">${data.status}</span></div>
+                <div data-v-30972a14=""><span data-v-30972a14="">Time</span><span data-v-30972a14="">${data.created_at}</span></div>
+            </div>
+        </div>`;
+    });
+
+    // Insert the generated HTML into the DOM
+    $('#van-list').html(html);
+}
+
             $.ajax({
                 type: "GET",
                 url: "/api/webapi/fundTransferReport", 
