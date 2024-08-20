@@ -62,7 +62,6 @@
                     <th class="text-center">Phone</th>
                     <th class="text-center">Level</th>
                     <th class="text-center">Game Wallet</th>
-                    <th class="text-center">WIN Wallet</th>
                     <th class="text-center">Total Balance</th>
                     <th class="text-center">AI Wallet</th>
                     <th class="text-center">State</th>
@@ -125,11 +124,9 @@
       <td>
         <b>${data.money}</b>
       </td>
+     
       <td>
-        <b>${data.win_wallet}</b>
-      </td>
-      <td>
-        <b>${parseFloat(data.win_wallet) + parseFloat(data.money)}</b>
+        <b>${ parseFloat(data.money)}</b>
       </td>
       <td>
         <b>${data.ai_balance}</b>

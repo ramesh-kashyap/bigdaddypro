@@ -8038,7 +8038,7 @@
                         <div data-v-7cba6004="" class="img"><svg data-v-7cba6004="" class="svg-icon icon-shuoming">
                                 <use xlink:href="#icon-shuoming"></use>
                             </svg></div>
-                        <p data-v-7cba6004="">Shares instructions</p>
+                        <p data-v-7cba6004="">Instructions</p>
                     </div>
                     <div data-v-7cba6004="" class="Recharge__container-intro__lists">
                         <!--v-if-->
@@ -8072,7 +8072,7 @@
                             class="svg-icon icon-historyHead">
                             <use xlink:href="/shareHistory"></use>
                         </svg>
-                        <h1 data-v-30972a14="">Shares history</h1>
+                        <h1 data-v-30972a14="">Profit Shares History</h1>
                     </div>
                     <div data-v-30972a14="" class="rechargeh__container-content" id="van-list">
                         
@@ -8623,411 +8623,217 @@ input, button, textarea {
 }
 
                 </style>
+                <style>
+                    /* Custom small pop-up */
+                    .custom-popup {
+                        position: fixed;
+                        top: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background-color: rgba(0, 0, 0, 0.8);
+                        color: white;
+                        padding: 10px 20px;
+                        border-radius: 5px;
+                        font-size: 14px;
+                        z-index: 10000;
+                        opacity: 0;
+                        transition: opacity 0.3s ease-in-out;
+                    }
+                    
+                    .custom-popup.show {
+                        opacity: 1;
+                    }
+                    
+                    .custom-popup.hide {
+                        opacity: 0;
+                        transition: opacity 0.3s ease-in-out;
+                    }
+                    
+                    .custom-popup button {
+                        background-color: transparent;
+                        color: white;
+                        border: none;
+                        font-size: 14px;
+                        margin-left: 10px;
+                        cursor: pointer;
+                    }
+                    </style>
+                    
 
 
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="/js/client.js"></script>
         <script>
-$(document).ready(function () {
-    const exchangeRate = 90; // Example exchange rate
+            $(document).ready(function () {
+                const exchangeRate = 90; // Example exchange rate
+            
+                // Calculate INR based on USD input
+                function calculateINR() {
+                    const usdAmount = parseFloat($('#usd_amount').val().trim()) || 0;
+                    const inrAmount = (usdAmount / exchangeRate).toFixed(2);
+                    $('#amountt').val(inrAmount);
+                }
+            
+                // Show alert message
+                function alertMess(text) {
+    // Create the pop-up element
+    const popup = document.createElement('div');
+    popup.className = 'custom-popup';
+    popup.innerHTML = `${text} <button>OK</button>`;
 
-    // Calculate INR based on USD input
-    function calculateINR() {
-        const usdAmount = parseFloat($('#usd_amount').val().trim()) || 0;
-        const inrAmount = (usdAmount / exchangeRate).toFixed(2);
-        $('#amountt').val(inrAmount);
-    }
+    // Append the pop-up to the body
+    document.body.appendChild(popup);
 
-    // Show alert message
-    function alertMess(text, element) {
-        $('body').append(`<div class="msg"><div class="msg-content">${text}</div></div>`);
+    // Show the pop-up
+    setTimeout(() => {
+        popup.classList.add('show');
+    }, 10);
+
+    // Hide the pop-up after clicking OK or after 3 seconds
+    const hidePopup = () => {
+        popup.classList.remove('show');
+        popup.classList.add('hide');
         setTimeout(() => {
-            $('.msg-content').removeClass('v-enter-active v-enter-to').addClass('v-leave-active v-leave-to');
-            setTimeout(() => {
-                $('.msg').remove();
-            }, 100);
-            element.removeClass('block-click');
-        }, 1000);
-    }
+            document.body.removeChild(popup);
+        }, 300);
+    };
 
-    // Fetch user info and update UI
-    function updateUserInfo() {
-        $.ajax({
-            type: "GET",
-            url: "/api/webapi/GetUserInfo",
-            dataType: "json",
-            success: function (response) {
-                const user = response.data;
-                $('.wallet-user .name').text(user.name_user);
-                $('.money').text("₹" + user.ai_balance);
-            },
-            error: function () {
-                alertMess('Failed to load user information', $(this));
-            }
-        });
-    }
+    // Add click event listener to the OK button
+    // popup.querySelector('button').addEventListener('click', hidePopup);
 
-    // Initial call to update user info
-    updateUserInfo();
+    // Automatically hide after 3 seconds
+    setTimeout(hidePopup, 3000);
+}
 
-    // Refresh user info on click
-    $('#reload .van-image').on('click', function (e) {
-        e.preventDefault();
-        $(this).addClass('action block-click');
-        updateUserInfo();
-        setTimeout(() => {
-            $(this).removeClass('action block-click');
-        }, 2500);
-    });
+// Example usage
 
-    // Enable/Disable button based on input
-    $('input').on('input', function () {
-        const value = $(this).val().trim();
-        $(".btn-list button").css({
-            'color': value ? 'rgb(255, 255, 255)' : 'rgb(255, 255, 255)',
-            'background': value ? 'rgb(92, 186, 71)' : 'rgb(181, 181, 181)',
-            'border-color': value ? 'rgb(92, 186, 71)' : 'rgb(181, 181, 181)'
-        });
-    });
-
-    // Handle payment selection
-    $('.pay-box .list .li').on('click', function (e) {
-        e.preventDefault();
-        const money = parseFloat($(this).attr('data-money'));
-        $('.pay-box .list .li').removeClass('action');
-        $(this).addClass('action');
-        $('#usd_amount').val(money.toFixed(2));
-        calculateINR();
-    });
-
-    // Payment method selection
-    $('.Recharge__container-tabcard__items').on('click', function () {
-        $('.Recharge__container-tabcard__items').removeClass('active');
-        $(this).addClass('active');
-        console.log($(this).data('payment'));
-    });
-
-    // Handle bank creation
-    $('#create-bank').on('click', function (e) {
-        e.preventDefault();
-        const money = parseFloat($('#usd_amount').val().trim());
-        const paymentType = $('.Recharge__container-tabcard__items.active').data('payment');
-
-        if (money && money >= 100 && money <= 50000) {
-            if (paymentType !== "UPI_ID" && money < 500) {
-                alertMess('Deposit amount range: 500 to 50000.00 in USDT Mode', $(this));
-                return false;
-            }
-
-            if (paymentType === "UPI_ID") {
-                window.location = `/wallet/paymentPage?amount=${money}`;
-                return;
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "/api/webapi/createPayment10",
-                data: { money, typeid: paymentType },
-                dataType: "json",
-                success: function (response) {
-                    handlePaymentResponse(response, money);
-                },
-                error: function () {
-                    alertMess('Payment creation failed', $(this));
-                }
-            });
-        } else {
-            alertMess('Deposit amount range: 10.00~10,000.00', $(this));
-        }
-    });
-
-    // Handle payment response
-    function handlePaymentResponse(response, money) {
-        alertMess(response.message, $(this));
-        $('.Loading').fadeIn(0);
-        $('.create-payment').hide();
-        $('.confirmation').show();
-
-        if (response.paymentType === "UPI") {
-            handleUPIPayment(response, money);
-        } else {
-            handleCryptoPayment(response);
-        }
-
-        setTimeout(() => {
-            $('.Loading').fadeOut(0);
-        }, 1500);
-    }
-
-    function handleUPIPayment(response, money) {
-        $('.info .box .text:eq(0)').html("₹" + money);
-        $('#transaction_id').val(response.orderId);
-        const url = new URL(response.datas.qrData, 'http://localhost');
-        const paValue = new URLSearchParams(url.search).get('pa');
-        $('.info .box .text:eq(1)').text(paValue);
-        $("#qrcode").attr("src", `data:image/png;base64,${response.datas.image}`).css('width', '100%');
-        $('#currency').val(response.paymentType);
-    }
-
-    function handleCryptoPayment(response) {
-        $('.info .box .text:eq(0)').html(`$${response.datas.invoice_total_sum} (₹${(response.datas.amount * exchangeRate).toFixed(2)})`);
-        $('#transaction_id').val(response.datas.id);
-        $('.info .box .text:eq(1)').text(response.datas.wallet_hash);
-        $("#qrcode").attr("src", response.datas.qr_code);
-        $('#amount_in_usdt').val(response.datas.invoice_total_sum);
-        $('#url').val(response.datas.checkout_url);
-        $('#currency').val(response.paymentType);
-    }
-
-    // Handle transaction storage
-    function storeTransaction() {
-        const id = $('#transaction_id').val();
-        const currency = $('#currency').val();
-
-        if (id) {
-            $.ajax({
-                type: "POST",
-                url: "/api/webapi/rechargeCancel",
-                data: { id, currency, type: "success" },
-                dataType: "json",
-                success: function (response) {
-                    alertMess(response.message, $(this));
-                    $('.create-payment').show();
-                    $('.confirmation').hide();
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1500);
-                },
-                error: function () {
-                    alertMess('Transaction storage failed', $(this));
-                }
-            });
-        }
-    }
-
-    // Start transaction storage interval
-    storeTransaction();
-    setInterval(storeTransaction, 2000);
-
-    // Handle transaction cancellation
-    $('.cancel').on('click', function (e) {
-        e.preventDefault();
-        if (confirm("Are you sure you want to cancel this transaction?")) {
-            const id = $('#transaction_id').val();
-            $.ajax({
-                type: "POST",
-                url: "/api/webapi/rechargeCancel",
-                data: { id, type: "cancel" },
-                dataType: "json",
-                success: function (response) {
-                    alertMess(response.message, $(this));
-                    $('.create-payment').show();
-                    $('.confirmation').hide();
-                    location.reload();
-                },
-                error: function () {
-                    alertMess('Cancellation failed', $(this));
-                }
-            });
-        }
-    });
-
-    // Handle text copying
-    $('.info .box').on('click', function () {
-        const text = $(this).find('.text').text().trim();
-        navigator.clipboard.writeText(text).then(() => {
-            alertMess('Copy successful', $(this));
-        });
-    });
-
-    // Transfer functionality
-    $('#submit-btn').on('click', function (e) {
-    e.preventDefault();
-    const amount = $('input:eq(0)').val().trim();
-    const password = $('input:eq(1)').val().trim();
-    const submitBtn = $(this);
-
-    console.log('Submit button clicked');
-    console.log('Amount:', amount);
-    console.log('Password:', password);
-
-    if (amount && password) {
-        $.ajax({
-            type: "POST",
-            url: "/api/webapi/fundtransfer",
-            data: { amount, password },
-            dataType: "json",
-            beforeSend: function () {
-                console.log('AJAX request is being sent');
-                submitBtn.addClass('block-click');
-            },
-            success: function (response) {
-                console.log('AJAX request successful', response);
-                if (response.status === true) {
-                    $('.amount').text('₹' + response.money);
-                }
-                alertMess(response.message, submitBtn);
-            },
-            complete: function () {
-                console.log('AJAX request completed');
-                submitBtn.removeClass('block-click');
-            },
-            error: function () {
-                console.log('AJAX request failed');
-                alertMess('An error occurred, please try again.', submitBtn);
-            }
-        });
-    } else {
-        console.log('Amount or password is missing');
-    }
-});
-
-});
-
-
-
-            </script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-        <script>           
-
-            $('#dash-invest').click(function (e) {
-                e.preventDefault();
-                $(this).addClass('block-click');
-                let money = $('#van-field-17-input').val().trim();
-                let type = $('.Recharge__container-tabcard__items.active').data(
-                    'payment'); // Get the value of the selected payment mode
-
-                if (money && money >= 100 && money <= 50000) {
-
-                    if (type != "UPI_ID" && money < 500) {
-                        $(this).addClass('block-click');
-                        alertMess('Deposit amount range: 500 to 50000.00 in USDT Mode', $(this));
-
-                        return false;
-                    }
-
-                    if (type=="UPI_ID")
-                     {
-                   
-                        window.location = '/wallet/paymentPage?amount=' + money;
-
-                        return 
-                    }
-
+            
+                // Fetch user info and update UI
+                function updateUserInfo() {
                     $.ajax({
-                        type: "POST",
-                        url: "/api/webapi/createPayment10",
-                        data: {
-                            money: money,
-                            typeid: type,
-                        },
+                        type: "GET",
+                        url: "/api/webapi/GetUserInfo",
                         dataType: "json",
                         success: function (response) {
-                            alertMess(response.message, $(this));
-                            $('.Loading').fadeIn(0);
-                            $('.create-payment').hide();
-                            $('.confirmation').show();
-                            if (response.paymentType == "UPI") {
-
-                                $('.info .box .text:eq(0)').html("₹" + money);
-                                $('#transaction_id').val(response.orderId);
-                                const url = new URL(response.datas.qrData, 'http://localhost'); // Base URL is required for URL constructor
-                                // Extract the parameters
-                                const params = new URLSearchParams(url.search);
-
-                                // Get the value of the 'pa' parameter
-                                const paValue = params.get('pa');
-
-                                $('.info .box .text:eq(1)').text(paValue);
-                                $("#qrcode").attr("src", `data:image/png;base64,${response.datas.image}`).css('width', '100%');
-                                // Set QR code image src
-                                // $("#href-bank").css('display','block');
-                                $('#currency').val(response.paymentType);
-
-                            }
-                            else {
-                                $('.info .box .text:eq(0)').html("$" + response.datas.invoice_total_sum + " (₹" + (
-                                    response.datas.amount * exchangeRate).toFixed(2) + ")");
-                                $('#transaction_id').val(response.datas.id);
-                                $('.info .box .text:eq(1)').text(response.datas.wallet_hash);
-                                // $("#href-bank").css('display','block');
-                                // Set QR code image src
-
-                                $("#qrcode").attr("src", response.datas.qr_code);
-
-                                $('#amount_in_usdt').val(response.datas.invoice_total_sum);
-                                $('#url').val(response.datas.checkout_url);
-                                $('#currency').val(response.paymentType);
-
-                            }
-
-                            setTimeout(() => {
-                                $('.Loading').fadeOut(0);
-                            }, 1500);
+                            const user = response.data;
+                            $('.wallet-user .name').text(user.name_user);
+                            $('.money').text("₹" + user.ai_balance);
+                        },
+                        error: function () {
+                            alertMess('Failed to load user information', null);
                         }
                     });
-                    return true;
                 }
-                $(this).addClass('block-click');
-                alertMess('Deposit amount range: 100.00~10,000.00', $(this));
+            
+                // Initial call to update user info
+                updateUserInfo();
+            
+                // Refresh user info on click
+                $('#reload .van-image').on('click', function (e) {
+                    e.preventDefault();
+                    $(this).addClass('action block-click');
+                    updateUserInfo();
+                    setTimeout(() => {
+                        $(this).removeClass('action block-click');
+                    }, 2500);
+                });
+            
+                // Handle text copying
+                $('.info .box').on('click', function () {
+                    const text = $(this).find('.text').text().trim();
+                    navigator.clipboard.writeText(text).then(() => {
+                        alertMess('Copy successful', $(this));
+                    });
+                });
+            
+                // Transfer functionality
+                $('#submit-btn').on('click', function (e) {
+                    e.preventDefault();
+                    const amount = parseFloat($('input:eq(0)').val().trim());
+                    const password = $('input:eq(1)').val().trim();
+                    const submitBtn = $(this);
+            
+                    console.log('Submit button clicked');
+                    console.log('Amount:', amount);
+                    console.log('Password:', password);
+            
+                    if (!amount || !password) {
+                        alertMess('Amount or password is missing', submitBtn);
+                        console.log('Amount or password is missing');
+                        return;
+                    }
+            
+                    if (amount < 100) {
+                        alertMess('Amount must be 100 or greater', submitBtn);
+                        console.log('Amount must be 100 or greater');
+                        return;
+                    }
+            
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/webapi/fundtransfer",
+                        data: { amount, password },
+                        dataType: "json",
+                        beforeSend: function () {
+                            console.log('AJAX request is being sent');
+                            submitBtn.addClass('block-click');
+                        },
+                        success: function (response) {
+                            console.log('AJAX request successful', response);
+                            if (response.status === true) {
+                                $('.amount').text('₹' + response.money);
+                            }
+                            alertMess(response.message, submitBtn);
+                        },
+                        complete: function () {
+                            console.log('AJAX request completed');
+                            submitBtn.removeClass('block-click');
+                        },
+                        error: function () {
+                            console.log('AJAX request failed');
+                            alertMess('An error occurred, please try again.', submitBtn);
+                        }
+                    });
+                });
             });
-
-
-
-
-
-            function formateT(params) {
-                let result = (params < 10) ? "0" + params : params;
-                return result;
-            }
-            function timerJoin(dateString) {
-                let date = new Date(dateString);
-                let years = formateT(date.getFullYear());
-                let months = formateT(date.getMonth() + 1);
-                let days = formateT(date.getDate());
-                return years + '-' + months + '-' + days;
-            }
-
+            </script>
+            
+            <script>
             function MemRender(datas) {
                 let html = '';
                 const limitedData = datas.slice(0, 5);
                 datas.map((data) => {
                     html +=`
                     <div data-v-30972a14="" class="rechargeh__container-content__item">
-                            <!-- <div class="rechargeh__container-content__item-header ar-1px-b" @click="onToDetail(item.state)"> -->
-                            <div data-v-30972a14="" class="rechargeh__container-content__item-header ar-1px-b"><span
-                                    data-v-30972a14="">Shares</span><span data-v-30972a14="" class="stateG">Completed
-                                    <!-- <van-icon name="arrow" /> --></span></div>
+                            <div data-v-30972a14="" class="rechargeh__container-content__item-header ar-1px-b">
+                                <span data-v-30972a14="">Profit Share</span>
+                                <span data-v-30972a14="" class="stateG">Completed</span>
+                            </div>
                             <div data-v-30972a14="" class="rechargeh__container-content__item-body">
-                                <div data-v-30972a14=""><span data-v-30972a14="">Share Amount</span><span
-                                        data-v-30972a14="">₹${data.amount}</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Status</span><span data-v-30972a14="">
-                                        ${data.status}</span></div>
-                                <div data-v-30972a14=""><span data-v-30972a14="">Time</span><span
-                                        data-v-30972a14="">${timerJoin(data.created_at)}</span></div>
-                                <div data-v-30972a14=""><svg data-v-30972a14=""
-                                        class="svg-icon icon-copy">
-                                        <use xlink:href="#icon-copy"></use>
-                                    </svg></div>
+                                <div data-v-30972a14=""><span data-v-30972a14="">Amount</span><span data-v-30972a14="">₹${data.amount}</span></div>
+                                <div data-v-30972a14=""><span data-v-30972a14="">Type</span><span data-v-30972a14="">${data.status}</span></div>
+                                <div data-v-30972a14=""><span data-v-30972a14="">Time</span><span data-v-30972a14="">${data.created_at}</span></div>
                             </div>
                         </div>`;
                 });
                 $('#van-list').html(html);
             }
+            
             $.ajax({
                 type: "GET",
                 url: "/api/webapi/fundTransferReport", 
                 dataType: "json",
                 success: function (response) {
+                    console.log(response.fundTransfers);
                     MemRender(response.fundTransfers);
                 }
             });
-
-        </script>
+            </script>
+            
 </body>
 
 

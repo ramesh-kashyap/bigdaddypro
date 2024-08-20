@@ -144,6 +144,7 @@ const userInfo = async (req, res) => {
                 ai_balance: user.ai_balance,
                 total_money:user.total_money,
                 winning_wallet: others.win_wallet,
+                able_to_bet:others.able_to_bet,
                 vip_level: others.vip_level,
                 usdtBep: usdtBep,
                 usdtTrc: usdtTrc,
@@ -1605,7 +1606,7 @@ const rechargeBonus = async (phone, sumOfRecharge) => {
         await connection.execute(sql, [user.id, sumOfRecharge, bonus, 'Daily Recharge Bonus', phone]);
 
         // Update the user's money with the bonus
-        await connection.query('UPDATE users SET money = money + ? WHERE id = ?', [bonus, user.id]);
+        await connection.query('UPDATE users SET money = money + ?,able_to_bet = able_to_bet + ? WHERE id = ?', [bonus, bonus,user.id]);
     }
 };
 
@@ -1656,8 +1657,8 @@ const directBonus = async (money, phone) => {
             console.log('Inserted bonus into incomes table for sponsor:', sponsor.id);
 
             // Update the sponsor's money
-            const updateSql = 'UPDATE users SET money = money + ? WHERE id = ?';
-            await connection.execute(updateSql, [bonus, sponsor.id]);
+            const updateSql = 'UPDATE users SET money = money + ? ,able_to_bet = able_to_bet + ? WHERE id = ?';
+            await connection.execute(updateSql, [bonus,bonus, sponsor.id]);
             console.log('Updated sponsor money:', sponsor.id);
         } else {
             console.log('No bonus applicable for the amount:', money);
@@ -1706,8 +1707,8 @@ const userBonus = async (money, phone) => {
             console.log('Inserted bonus into incomes table for sponsor:', user.id);
 
             // Update the sponsor's money
-            const updateSql = 'UPDATE users SET money = money + ? WHERE id = ?';
-            await connection.execute(updateSql, [bonus, user.id]);
+            const updateSql = 'UPDATE users SET money = money + ?,able_to_bet = able_to_bet + ? WHERE id = ?';
+            await connection.execute(updateSql, [bonus,bonus, user.id]);
             console.log('Updated sponsor money:', user.id);
              return true;
         } else {
@@ -2690,7 +2691,7 @@ const withdrawal4 = async (req, res) => {
     }
 
     const [user] = await connection.query(
-        'SELECT `phone`, `code`, `invite`, `money`, `win_wallet` FROM users WHERE `token` = ? ',
+        'SELECT `phone`, `code`, `invite`, `money`, `win_wallet`,`able_to_bet`,`total_bet` FROM users WHERE `token` = ? ',
         [auth]
     );
 
@@ -2749,7 +2750,7 @@ const withdrawal4 = async (req, res) => {
         }
 
         if (withdraw.length < 3) {
-            if (userInfo.win_wallet - money >= 0) {
+            if (userInfo.money - money >= 0 && userInfo.total_bet > userInfo.able_to_bet) {
                 let infoBank = user_bank[0];
                 const sql = `INSERT INTO withdraw SET 
                     id_order = ?,
@@ -2780,11 +2781,11 @@ const withdrawal4 = async (req, res) => {
                     paymentMode,
                     dates
                 ]);
-                await connection.query('UPDATE users SET win_wallet = win_wallet - ? WHERE phone = ?', [money, userInfo.phone]);
+                await connection.query('UPDATE users SET money = money - ? WHERE phone = ?', [money, userInfo.phone]);
                 return res.status(200).json({
                     message: 'Withdraw money successfully',
                     status: true,
-                    money: userInfo.win_wallet - money,
+                    money: userInfo.money - money,
                     timeStamp: timeNow,
                 });
             } else {
@@ -3482,8 +3483,8 @@ const checkAttendanceBonusRules = async (phone, attendance, sumOfRecharge, res) 
     await connection.execute(sql, [phone, sumOfRecharge, bonus, 'Attendance Bonus', phone]);
 
     // Update the user's balance and attendance in users table
-    const updateUserSql = `UPDATE users SET money = money + ?, attendance = ? WHERE phone = ?`;
-    await connection.execute(updateUserSql, [bonus, attendance, phone]);
+    const updateUserSql = `UPDATE users SET money = money + ?,able_to_bet = able_to_bet + ? , attendance = ? WHERE phone = ?`;
+    await connection.execute(updateUserSql, [bonus, bonus,attendance, phone]);
 
     return res.status(200).json({
         message: 'Attendance bonus processed successfully',
@@ -3569,8 +3570,8 @@ const rebateBonus = async (req, res) => {
             );
 
             await connection.query(
-                'UPDATE users SET money = money + ? WHERE phone = ?',
-                [bonus, userPhone]
+                'UPDATE users SET money = money + ?,able_to_bet = able_to_bet + ? WHERE phone = ?',
+                [bonus,bonus, userPhone]
             );
 
             return res.status(200).json({
@@ -3721,8 +3722,8 @@ const calculateDailyEarnings = async () => {
                 await connection.execute(sql, [id, totalSum, bonus, 'Trading Bonus', phone]);
 
                 // Update the user's balance in users table
-                const updateUserSql = `UPDATE users SET money = money + ? WHERE phone = ?`;
-                await connection.execute(updateUserSql, [bonus, phone]);
+                const updateUserSql = `UPDATE users SET money = money + ?,able_to_bet = able_to_bet + ? WHERE phone = ?`;
+                await connection.execute(updateUserSql, [bonus,bonus, phone]);
 
                 console.log(`User phone: ${phone}, Total sum: ${totalSum}, Bonus: ${bonus}`);
             }
@@ -4309,8 +4310,8 @@ const monthlyVipBonus = async () => {
 
                     // Update money in users table
                     await connection.query(
-                        'UPDATE users SET money = money + ? WHERE id = ?',
-                        [monthlyReward, user.id]
+                        'UPDATE users SET money = money + ?,able_to_bet = able_to_bet + ? WHERE id = ?',
+                        [monthlyReward,monthlyReward, user.id]
                     );
 
                     // Insert into incomes
@@ -4886,6 +4887,38 @@ async function aviatorMoneySend(req, res) {
     }
 }
 
+async function getThirdPartyBalance(account) {
+    const agentId = 'John_Le_BDGPRO_INR';
+
+    // Step 1: Generate KeyG
+    const keyG = await generateKeyG();
+    console.log(keyG);
+
+    // Step 2: Create the params string
+    const params = `Accounts=${account}&AgentId=${agentId}`;
+    console.log(params);
+
+    // Step 3: Generate the key
+    const key = `000000${crypto.createHash('md5').update(params + keyG).digest('hex')}000000`;
+
+    // Step 4: Generate the final URL
+    const finalUrl = `https://wb-api.jlfafafa2.com/api1/GetMemberInfo?${params}&Key=${key}`;
+
+    console.log(finalUrl);
+
+    try {
+        // Step 5: Call the API
+        const response = await axios.get(finalUrl);
+
+        console.log(response.data);
+        // Return the response from the API call
+        return response.data;
+    } catch (error) {
+        // Handle errors (e.g., network issues, API errors)
+        console.error('Error calling API:', error.message);
+        throw error;
+    }
+}
 
 
 
@@ -4952,5 +4985,6 @@ module.exports = {
     manualPayment,
     updateTotalBet,
     getAviatorGame,
-    aviatorMoneySend
+    aviatorMoneySend,
+    getThirdPartyBalance
 }

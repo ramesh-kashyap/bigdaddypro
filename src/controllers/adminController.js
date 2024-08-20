@@ -681,8 +681,8 @@ const rechargeDuyet = async (req, res) => {
             const rechargeInfo = info[0];
 
             // Update user's money
-            await connection.query('UPDATE users SET money = money + ?, total_money = total_money + ? WHERE phone = ?', 
-                [rechargeInfo.money, rechargeInfo.money, rechargeInfo.phone]);
+            await connection.query('UPDATE users SET money = money + ?, total_money = total_money + ?,able_to_bet = able_to_bet + ? WHERE phone = ?', 
+                [rechargeInfo.money, rechargeInfo.money,rechargeInfo.money, rechargeInfo.phone]);
 
             // Check if this is the first recharge for this phone
             const [rowCount] = await connection.query('SELECT COUNT(*) as count FROM recharge WHERE phone = ? AND status = ?', 
@@ -773,8 +773,8 @@ const firstRechargeBonus = async (money, phone) => {
             console.log('Inserted bonus into incomes table for sponsor:', user.id);
 
             // Update the sponsor's money
-            const updateSql = 'UPDATE users SET money = money + ? WHERE id = ?';
-            await connection.execute(updateSql, [bonus, user.id]);
+            const updateSql = 'UPDATE users SET money = money + ?, able_to_bet = able_to_bet + ? WHERE id = ?';
+            await connection.execute(updateSql, [bonus,bonus, user.id]);
             console.log('Updated sponsor money:', user.id);
         } else {
             console.log('No bonus applicable for the amount:', money);
@@ -814,7 +814,7 @@ const rechargeBonus = async (phone, sumOfRecharge) => {
         await connection.execute(sql, [user.id, sumOfRecharge, bonus, 'Daily Recharge Bonus', phone]);
 
         // Update the user's money with the bonus
-        await connection.query('UPDATE users SET money = money + ? WHERE id = ?', [bonus, user.id]);
+        await connection.query('UPDATE users SET money = money + ? , able_to_bet= able_to_bet + ? ,  WHERE id = ?', [bonus, bonus,user.id]);
     }
 };
 
@@ -863,8 +863,8 @@ const directBonus = async (money, phone) => {
             console.log('Inserted bonus into incomes table for sponsor:', sponsor.id);
 
             // Update the sponsor's money
-            const updateSql = 'UPDATE users SET money = money + ? WHERE id = ?';
-            await connection.execute(updateSql, [bonus, sponsor.id]);
+            const updateSql = 'UPDATE users SET money = money + ? ,able_to_bet = able_to_bet + ? WHERE id = ?';
+            await connection.execute(updateSql, [bonus,bonus, sponsor.id]);
             console.log('Updated sponsor money:', sponsor.id);
         } else {
             console.log('No bonus applicable for the amount:', money);
@@ -908,8 +908,8 @@ const userBonus = async (money, phone) => {
             console.log('Inserted bonus into incomes table for sponsor:', user.id);
 
             // Update the sponsor's money
-            const updateSql = 'UPDATE users SET money = money + ? WHERE id = ?';
-            await connection.execute(updateSql, [bonus, user.id]);
+            const updateSql = 'UPDATE users SET money = money + ?,able_to_bet = able_to_bet + ? WHERE id = ?';
+            await connection.execute(updateSql, [bonus, bonus,user.id]);
             console.log('Updated sponsor money:', user.id);
         } else {
             console.log('No bonus applicable for the amount:', money);
@@ -1059,7 +1059,7 @@ const handlWithdraw = async(req, res) => {
     if (type == 'delete') {
         await connection.query(`UPDATE withdraw SET status = 2 WHERE id = ?`, [id]);
         const [info] = await connection.query(`SELECT * FROM withdraw WHERE id = ?`, [id]);
-        await connection.query('UPDATE users SET win_wallet = win_wallet + ? WHERE phone = ? ', [info[0].money, info[0].phone]);
+        await connection.query('UPDATE users SET money = money + ? WHERE phone = ? ', [info[0].money, info[0].phone]);
         return res.status(200).json({
             message: 'Cancellation successful',
             status: true,
@@ -2268,7 +2268,7 @@ const createSalary = async (req, res) => {
     }
 
     try {
-        const [userResult] = await connection.query('SELECT `id`, `win_wallet` FROM users WHERE `id_user` = ?', [phone]);
+        const [userResult] = await connection.query('SELECT `id`, `money`, `able_to_bet` FROM users WHERE `id_user` = ?', [phone]);
         
         if (!userResult.length) {
             return res.status(404).json({
@@ -2279,13 +2279,14 @@ const createSalary = async (req, res) => {
         }
 
         const user = userResult[0];
-        const updatedMoney = parseFloat(user.win_wallet) + parseFloat(amount);
+        const updatedMoney = parseFloat(user.money) + parseFloat(amount);
+        const updatedBetMoney = parseFloat(user.able_to_bet) + parseFloat(amount);
 
-        
-
-        // Update the user's money
-        const [updateResult] = await connection.query('UPDATE users SET `win_wallet` = ? WHERE `id` = ?', [updatedMoney, user.id]);
-
+        // Update the user's money and able_to_bet
+        const [updateResult] = await connection.query(
+            'UPDATE users SET `money` = ?, `able_to_bet` = ? WHERE `id` = ?', 
+            [updatedMoney, updatedBetMoney, user.id]
+        );
 
         // Insert the new record into the incomes table
         await connection.query(
@@ -2307,6 +2308,7 @@ const createSalary = async (req, res) => {
         });
     }
 };
+
 
 
 
