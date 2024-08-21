@@ -754,21 +754,30 @@ const listFundTransferReport = async (req, res) => {
     }
     
     const [user] = await connection.query('SELECT `id`, `phone` FROM users WHERE `token` = ?', [auth]);
-    if (!user.length) {
+    if (user.length === 0) {
         return res.status(200).json({
             message: 'Failed',
             status: false,
             timeStamp: new Date().toISOString(),
         });
     }
+    
 
     let userId = user[0].id;
+    if (!userId) {
+        return res.status(200).json({
+            message: 'Failed',
+            status: false,
+        });
+    }
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const offset = (page - 1) * limit;
 
     const [fundTransfers] = await connection.query(
-        'SELECT `created_at`, `amount`, `status` FROM fund_transfer WHERE `user_id` = ? AND `remarks` = 0 ORDER BY `created_at` DESC', 
-        [userId]
-    );
-    
+        'SELECT `created_at`, `amount`, `status` FROM fund_transfer WHERE `user_id` = ? AND `remarks` = 0 ORDER BY `created_at` DESC LIMIT ? OFFSET ?', 
+        [userId, limit, offset]
+    );    
 
     return res.status(200).json({
         message: 'Receive success',
